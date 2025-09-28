@@ -1,4 +1,8 @@
+import 'package:bloclabs/slider_and_switch_demo/bloc/switch/switch_bloc.dart';
+import 'package:bloclabs/slider_and_switch_demo/bloc/switch/switch_event.dart';
+import 'package:bloclabs/slider_and_switch_demo/bloc/switch/switch_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SliderAndSwitchScreen extends StatelessWidget {
   const SliderAndSwitchScreen({super.key});
@@ -18,7 +22,14 @@ class SliderAndSwitchScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text("Notifications"),
-                  Switch(value: true, onChanged: (value) {}),
+                  BlocBuilder<SwitchBloc, SwitchState>(
+                    builder: (context, state) {
+                      return Switch(
+                        value: state.isNotification,
+                        onChanged: (value) => context.read<SwitchBloc>().add(EnableOrDisableNotification()),
+                      );
+                    },
+                  ),
                 ],
               ),
               SizedBox(height: 30),
