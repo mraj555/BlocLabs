@@ -1,3 +1,6 @@
+import 'package:bloclabs/slider_and_switch_demo/bloc/slider/slider_bloc.dart';
+import 'package:bloclabs/slider_and_switch_demo/bloc/slider/slider_event.dart';
+import 'package:bloclabs/slider_and_switch_demo/bloc/slider/slider_state.dart';
 import 'package:bloclabs/slider_and_switch_demo/bloc/switch/switch_bloc.dart';
 import 'package:bloclabs/slider_and_switch_demo/bloc/switch/switch_event.dart';
 import 'package:bloclabs/slider_and_switch_demo/bloc/switch/switch_state.dart';
@@ -23,6 +26,8 @@ class SliderAndSwitchScreen extends StatelessWidget {
                 children: [
                   Text("Notifications"),
                   BlocBuilder<SwitchBloc, SwitchState>(
+                    //buildWhen property used for restrict rebuild widget when its unnecessary
+                    buildWhen: (previous, current) => previous.isNotification != current.isNotification,
                     builder: (context, state) {
                       return Switch(
                         value: state.isNotification,
@@ -33,9 +38,18 @@ class SliderAndSwitchScreen extends StatelessWidget {
                 ],
               ),
               SizedBox(height: 30),
-              Container(height: 200, color: Colors.red.withValues(alpha: .2)),
+              BlocBuilder<SliderBloc, SliderState>(
+                buildWhen: (previous, current) => previous.opacity != current.opacity,
+                builder: (context, state) => Container(height: 200, color: Colors.green.withValues(alpha: state.opacity)),
+              ),
               SizedBox(height: 50),
-              Slider(value: .4, onChanged: (value) {}),
+              BlocBuilder<SliderBloc, SliderState>(
+                buildWhen: (previous, current) => previous.opacity != current.opacity,
+                builder: (context, state) => Slider(
+                  value: state.opacity,
+                  onChanged: (value) => context.read<SliderBloc>().add(ChangeOpacity(opacity: value)),
+                ),
+              ),
             ],
           ),
         ),
