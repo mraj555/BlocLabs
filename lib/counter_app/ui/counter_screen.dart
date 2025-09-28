@@ -1,13 +1,12 @@
+import 'package:bloclabs/counter_app/bloc/counter_bloc.dart';
+import 'package:bloclabs/counter_app/bloc/counter_event.dart';
+import 'package:bloclabs/counter_app/bloc/counter_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class CounterScreen extends StatefulWidget {
+class CounterScreen extends StatelessWidget {
   const CounterScreen({super.key});
 
-  @override
-  State<CounterScreen> createState() => _CounterScreenState();
-}
-
-class _CounterScreenState extends State<CounterScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -16,13 +15,29 @@ class _CounterScreenState extends State<CounterScreen> {
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text("0", style: TextStyle(fontSize: 60)),
+              BlocBuilder<CounterBloc, CounterState>(
+                builder: (context, state) {
+                  return Text("${state.counter}", style: TextStyle(fontSize: 60));
+                },
+              ),
+              SizedBox(height: 20),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  ElevatedButton.icon(onPressed: () {}, label: Text("Increment"), icon: Icon(Icons.add_circle_rounded)),
-                  ElevatedButton.icon(onPressed: () {}, label: Text("Decrement"), icon: Icon(Icons.remove_circle_rounded)),
+                  ElevatedButton.icon(
+                    onPressed: () => context.read<CounterBloc>().add(IncrementCounter()),
+                    label: Text("Increment"),
+                    icon: Icon(Icons.add_circle_rounded),
+                  ),
+                  SizedBox(width: 20),
+                  ElevatedButton.icon(
+                    onPressed: () => context.read<CounterBloc>().add(DecrementCounter()),
+                    label: Text("Decrement"),
+                    icon: Icon(Icons.remove_circle_rounded),
+                  ),
                 ],
               ),
             ],
