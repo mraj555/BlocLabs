@@ -1,3 +1,4 @@
+import 'package:bloclabs/counter_app/ui/counter_screen.dart';
 import 'package:bloclabs/equatable_demo/equatable_demo.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple)),
-      home: EquatableDemoScreen(),
+      home: CounterScreen(),
     );
   }
 }
