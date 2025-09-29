@@ -1,220 +1,284 @@
-# 🚀 BlocLabs Flutter Project
+# 🎯 BlocLabs — Flutter + BLoC Showcase
 
-Welcome to BlocLabs! This project serves as a practical demonstration of various Flutter concepts, with a primary focus on state management using the **BLoC (Business Logic Component)** pattern. It also showcases the usage of the `equatable` package for efficient model comparisons.
+> A concise, example-driven Flutter project demonstrating state management with BLoC, equality with Equatable, media selection with Image Picker, and reactive UI using Flutter widgets.
+
+---
 
 ## ✨ Badges
 
-![Flutter](https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white) ![Dart](https://img.shields.io/badge/Dart-0175C2?style=for-the-badge&logo=dart&logoColor=white) ![BLoC](https://img.shields.io/badge/BLoC-4A4A4A?style=for-the-badge&logo=flutter&logoColor=white) ![Equatable](https://img.shields.io/badge/Equatable-FF6F00?style=for-the-badge)
+![Flutter](https://img.shields.io/badge/Flutter-3.x-02569B?logo=flutter&logoColor=white)
+![Dart](https://img.shields.io/badge/Dart-3.x-0175C2?logo=dart&logoColor=white)
+![BLoC](https://img.shields.io/badge/State%20Mgmt-BLoC-7B1FA2)
+![Equatable](https://img.shields.io/badge/Equatable-enabled-43A047)
+![Image%20Picker](https://img.shields.io/badge/Image%20Picker-^1.2.0-009688)
 
-## 📂 Project Structure
+> Dependencies from `pubspec.yaml`: `bloc`, `flutter_bloc`, `equatable`, `image_picker`, `cupertino_icons`.
 
-The project is organized into modules, each demonstrating a specific feature or concept:
+---
 
-```
+## 🧭 Overview
+
+BlocLabs is a learning/demo app that bundles multiple independent examples:
+- 🧮 Counter with BLoC
+- 🧰 Equatable demo (value equality)
+- 🎚️ Slider + 🔔 Switch with BLoC (controlled rebuilds via `buildWhen`)
+- 🖼️ Image Picker with BLoC (camera/gallery)
+
+The app bootstraps multiple BLoCs using `MultiBlocProvider` and wires screens with reactive `BlocBuilder` widgets.
+
+---
+
+## 📂 Architecture & Folder Structure
+
+```text
 lib/
-├── main.dart                   # 🏁 Main application entry point
-├── counter_app/                # 🔢 Counter Demo Module
-│   ├── bloc/
-│   │   ├── counter_bloc.dart   # BLoC for counter logic
-│   │   ├── counter_event.dart  # Events for counter (e.g., Increment, Decrement)
-│   │   └── counter_state.dart  # State for counter (e.g., current count)
-│   └── ui/
-│       └── counter_screen.dart # UI for the Counter App
-├── equatable_demo/             #⚖️ Equatable Package Demo Module
-│   └── equatable_demo.dart     # Screen demonstrating Equatable usage
-└── slider_and_switch_demo/     # 🎚️ Slider & Switch Demo Module
-    ├── bloc/
-    │   ├── slider/
-    │   │   ├── slider_bloc.dart  # BLoC for slider logic (e.g., opacity)
-    │   │   ├── slider_event.dart # Events for slider
-    │   │   └── slider_state.dart # State for slider
-    │   └── switch/
-    │       ├── switch_bloc.dart  # BLoC for switch logic (e.g., notification toggle)
-    │       ├── switch_event.dart # Events for switch
-    │       └── switch_state.dart # State for switch
-    └── ui/
-        └── slider_and_switch_screen.dart # UI for Slider and Switch Demo
+├─ main.dart                      # App entry, MultiBlocProvider, theme, initial route
+├─ counter_app/
+│  ├─ bloc/
+│  │  ├─ counter_bloc.dart       # Business logic: increment/decrement
+│  │  ├─ counter_event.dart      # Events: IncrementCounter, DecrementCounter
+│  │  └─ counter_state.dart      # State: counter value + copyWith
+│  └─ ui/
+│     └─ counter_screen.dart     # UI: buttons dispatch events, show state
+├─ equatable_demo/
+│  └─ equatable_demo.dart        # Equatable vs manual equality demo
+├─ image_picker_demo/
+│  ├─ bloc/
+│  │  ├─ image_picker_bloc.dart  # Camera/Gallery handlers → emits XFile
+│  │  ├─ image_picker_event.dart # Events: CameraCapture, GalleryImagePicker
+│  │  └─ image_picker_state.dart # State: selected image (XFile?)
+│  ├─ ui/
+│  │  └─ image_picker_screen.dart# UI for camera/gallery + preview
+│  └─ utils/
+│     └─ image_picker_utils.dart # Thin wrapper around ImagePicker
+└─ slider_and_switch_demo/
+   ├─ bloc/
+   │  ├─ slider/                 # Slider opacity feature
+   │  │  ├─ slider_bloc.dart
+   │  │  ├─ slider_event.dart
+   │  │  └─ slider_state.dart
+   │  └─ switch/                 # Notification toggle feature
+   │     ├─ switch_bloc.dart
+   │     ├─ switch_event.dart
+   │     └─ switch_state.dart
+   └─ ui/
+      └─ slider_and_switch_screen.dart
 ```
 
-## 🎯 Main Application (`main.dart`)
+---
 
-The `main.dart` file initializes the Flutter application. 
+## 🧱 Core Modules & Responsibilities
 
-```dart
-import 'package:bloclabs/counter_app/ui/counter_screen.dart';
-import 'package:bloclabs/equatable_demo/equatable_demo.dart';
-import 'package:bloclabs/slider_and_switch_demo/bloc/slider/slider_bloc.dart';
-import 'package:bloclabs/slider_and_switch_demo/ui/slider_and_switch_screen.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+- **main.dart**: wires up `MultiBlocProvider` with `CounterBloc`, `SwitchBloc`, `SliderBloc`, `ImagePickerBloc` and sets the `home` screen.
+- **Counter Module**: showcases simple event-driven state changes via `CounterBloc`.
+- **Slider & Switch Module**: demonstrates multiple BLoCs in one screen with selective rebuilds using `buildWhen`.
+- **Image Picker Module**: abstracts media access through `ImagePickerUtils` and exposes a clean BLoC interface for UI.
+- **Equatable Demo**: contrasts manual equality vs `Equatable`-powered equality.
 
-import 'counter_app/bloc/counter_bloc.dart';
-import 'slider_and_switch_demo/bloc/switch/switch_bloc.dart';
+---
 
-void main() {
-  runApp(const MyApp());
-}
+## 🔌 Data Flow (BLoC Pattern)
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+1. UI dispatches an **Event** to a **Bloc** (`context.read<Bloc>().add(Event())`).
+2. **Bloc** handles the event, computes new **State**.
+3. `BlocBuilder` rebuilds on state changes and renders.
 
-  @override
-  Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<CounterBloc>(create: (context) => CounterBloc()),
-        BlocProvider<SwitchBloc>(create: (context) => SwitchBloc()),
-        BlocProvider<SliderBloc>(create: (context) => SliderBloc()),
-      ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: Colors.green)),
-        home: SliderAndSwitchScreen(), // Initial screen
-      ),
-    );
+```mermaid
+flowchart LR
+  UI[UI Widgets] -- add(Event) --> BLoC
+  BLoC -- emit(State) --> UI
+```
+
+---
+
+## 🧮 Counter Feature
+
+- **Events**: `IncrementCounter`, `DecrementCounter`
+- **State**: `CounterState(counter: int)` with `copyWith`
+- **Bloc**: updates counter on events
+
+```20:33:lib/counter_app/bloc/counter_bloc.dart
+class CounterBloc extends Bloc<CounterEvent, CounterState> {
+  CounterBloc() : super(const CounterState()) {
+    on<IncrementCounter>(_onIncrement);
+    on<DecrementCounter>(_onDecrement);
+  }
+
+  void _onIncrement(IncrementCounter event, Emitter<CounterState> emit) {
+    emit(state.copyWith(counter: state.counter + 1));
   }
 }
 ```
 
-Key aspects:
-- It uses `MultiBlocProvider` to make multiple BLoCs (`CounterBloc`, `SwitchBloc`, `SliderBloc`) available to the widget tree.
-- The application theme is set with a `seedColor` of green.
-- The `SliderAndSwitchScreen` is set as the initial screen of the application.
+```20:41:lib/counter_app/ui/counter_screen.dart
+ElevatedButton.icon(
+  onPressed: () => context.read<CounterBloc>().add(IncrementCounter()),
+  label: Text("Increment"),
+  icon: Icon(Icons.add_circle_rounded),
+)
+```
 
-## 🧩 Modules & Features
+---
 
-### 1. Counter App 🔢
+## 🎚️ Slider + 🔔 Switch Feature
 
-This module demonstrates a simple counter application using the BLoC pattern.
+- **SwitchBloc** toggles `isNotification`.
+- **SliderBloc** adjusts `opacity` for a colored container.
+- Uses `buildWhen` to avoid unnecessary rebuilds.
 
-- **`CounterBloc`**: 
-    - Manages the counter's state (`CounterState`).
-    - Responds to `CounterEvent`s: `IncrementCounter` and `DecrementCounter`.
-    - Emits new states with the updated counter value.
-    ```dart
-    // From: lib/counter_app/bloc/counter_bloc.dart
-    class CounterBloc extends Bloc<CounterEvent, CounterState> {
-      CounterBloc() : super(const CounterState()) {
-        on<IncrementCounter>(_onIncrement);
-        on<DecrementCounter>(_onDecrement);
-      }
-    
-      void _onIncrement(IncrementCounter event, Emitter<CounterState> emit) {
-        emit(state.copyWith(counter: state.counter + 1));
-      }
-    
-      void _onDecrement(DecrementCounter event, Emitter<CounterState> emit) {
-        emit(state.copyWith(counter: state.counter - 1));
-      }
-    }
-    ```
-- **`CounterScreen`**: 
-    - A `StatelessWidget` that displays the current count from `CounterBloc` using `BlocBuilder`.
-    - Provides "Increment" and "Decrement" buttons that dispatch events to the `CounterBloc`.
-    ```dart
-    // From: lib/counter_app/ui/counter_screen.dart
-    // ...
-    BlocBuilder<CounterBloc, CounterState>(
-      builder: (context, state) {
-        return Text("${state.counter}", style: TextStyle(fontSize: 60));
-      },
-    ),
-    // ...
-    ElevatedButton.icon(
-      onPressed: () => context.read<CounterBloc>().add(IncrementCounter()),
-      label: Text("Increment"),
-      icon: Icon(Icons.add_circle_rounded),
-    ),
-    // ...
-    ```
+```28:36:lib/slider_and_switch_demo/ui/slider_and_switch_screen.dart
+BlocBuilder<SwitchBloc, SwitchState>(
+  buildWhen: (previous, current) => previous.isNotification != current.isNotification,
+  builder: (context, state) {
+    return Switch(
+      value: state.isNotification,
+      onChanged: (value) => context.read<SwitchBloc>().add(EnableOrDisableNotification()),
+    );
+  },
+)
+```
 
-### 2. Equatable Demo ⚖️
+```41:51:lib/slider_and_switch_demo/ui/slider_and_switch_screen.dart
+BlocBuilder<SliderBloc, SliderState>(
+  buildWhen: (previous, current) => previous.opacity != current.opacity,
+  builder: (context, state) => Slider(
+    value: state.opacity,
+    onChanged: (value) => context.read<SliderBloc>().add(ChangeOpacity(opacity: value)),
+  ),
+)
+```
 
-This module showcases the use of the `equatable` package to simplify object comparisons.
+---
 
-- **`EquatableDemoScreen`**: 
-    - Demonstrates the difference between comparing class instances with and without `Equatable`.
-- **`Person` class**: A plain Dart class where equality `==` operator and `hashCode` are manually overridden.
-- **`NewPerson` class**: Extends `Equatable` and overrides `props` to achieve value equality with less boilerplate code.
+## 🖼️ Image Picker Feature
 
-    ```dart
-    // From: lib/equatable_demo/equatable_demo.dart
-    
-    ///Writing Manual Code for Comparison
-    class Person {
-      // ... manual == and hashCode ...
-    }
-    
-    ///Equatable Package Auto Generate Comparison code for us
-    class NewPerson extends Equatable {
-      final String name;
-      final int age;
-    
-      const NewPerson({required this.name, required this.age});
-    
-      @override
-      List<Object?> get props => [name, age]; // Important for Equatable!
-    }
-    ```
-    The screen includes a `FloatingActionButton` that, when pressed, prints the results of comparing instances of `Person` and `NewPerson`, highlighting how `Equatable` makes it easier to compare objects by their properties rather than their references.
+- **Events**: `CameraCapture`, `GalleryImagePicker`
+- **State**: `ImagePickerState(image: XFile?)`
+- **Bloc**: calls `ImagePickerUtils` to pick/capture, then emits file
 
-### 3. Slider and Switch Demo 🎚️
+```15:23:lib/image_picker_demo/bloc/image_picker_bloc.dart
+Future<void> _onGalleryImagePicker(GalleryImagePicker event, Emitter<ImagePickerState> emit) async {
+  XFile? file = await utils.onPickFromGallery();
+  emit(state.copyWith(image: file));
+}
+```
 
-This module demonstrates UI controls like a Slider and Switch, managed by their respective BLoCs.
+```26:37:lib/image_picker_demo/ui/image_picker_screen.dart
+InkWell(
+  onTap: () => context.read<ImagePickerBloc>().add(GalleryImagePicker()),
+  child: CircleAvatar(child: Icon(Icons.photo_library_rounded)),
+)
+```
 
-- **`SliderBloc`**:
-    - Manages `SliderState`, which likely holds a value (e.g., opacity) controlled by a slider.
-    - Responds to `ChangeOpacity` event to update the opacity value.
-    ```dart
-    // From: lib/slider_and_switch_demo/bloc/slider/slider_bloc.dart
-    class SliderBloc extends Bloc<SliderEvent, SliderState> {
-      SliderBloc() : super(SliderState()) { // Assuming SliderState initializes default opacity
-        on<ChangeOpacity>(_onChangeOpacity);
-      }
-    
-      void _onChangeOpacity(ChangeOpacity event, Emitter<SliderState> emit) {
-        emit(state.copyWith(opacity: event.opacity));
-      }
-    }
-    ```
-- **`SwitchBloc`**:
-    - Manages `SwitchState`, which likely holds a boolean value (e.g., for enabling/disabling notifications).
-    - Responds to `EnableOrDisableNotification` event to toggle the boolean state.
-    ```dart
-    // From: lib/slider_and_switch_demo/bloc/switch/switch_bloc.dart
-    class SwitchBloc extends Bloc<SwitchEvent, SwitchState> {
-      SwitchBloc() : super(SwitchState()) { // Assuming SwitchState initializes default switch status
-        on<EnableOrDisableNotification>(_onEnableOrDisableNotification);
-      }
-    
-      void _onEnableOrDisableNotification(EnableOrDisableNotification event, Emitter<SwitchState> emit) {
-        emit(state.copyWith(isNotification: !state.isNotification));
-      }
-    }
-    ```
-- **`SliderAndSwitchScreen`**: 
-    - The UI for this demo. It integrates the `SliderBloc` and `SwitchBloc` to control UI elements and reflect state changes.
-    - This screen is also the `home` screen for the application.
+---
 
-## 🛠️ Key Libraries & Patterns
+## 🧰 Equatable Demo
 
-- **Flutter BLoC (`bloc`, `flutter_bloc`)**: Used extensively for state management, separating business logic from UI. This promotes testability and maintainability.
-  - `BlocProvider` / `MultiBlocProvider`: To provide BLoCs to the widget tree.
-  - `BlocBuilder`: To rebuild UI components in response to state changes in a BLoC.
-  - `context.read<BlocName>()`: To access BLoC instances and add events.
-- **Equatable**: Simplifies value equality comparisons for classes, often used in BLoC states and events to prevent unnecessary rebuilds if the actual data hasn't changed.
-- **Material Design**: The project uses Flutter's Material components for UI elements.
+- Shows difference between manual equality and `Equatable`.
 
-## 📊 Data Flow
+```63:72:lib/equatable_demo/equatable_demo.dart
+class NewPerson extends Equatable {
+  final String name;
+  final int age;
 
-1.  **UI Interaction**: User interacts with widgets (e.g., presses a button, moves a slider).
-2.  **Event Dispatch**: The UI dispatches an `Event` to the relevant `BLoC`.
-3.  **BLoC Processing**: The `BLoC` receives the event, processes it (applies business logic), and may interact with data sources or services.
-4.  **State Emission**: The `BLoC` emits a new `State` reflecting the changes.
-5.  **UI Update**: Widgets listening to the `BLoC` (e.g., via `BlocBuilder`) rebuild themselves with the new state information.
+  const NewPerson({required this.name, required this.age});
 
-This unidirectional data flow is a core principle of the BLoC pattern, leading to more predictable and manageable application states.
+  @override
+  List<Object?> get props => [name, age];
+}
+```
 
---- 
+---
 
-This README provides an overview of the BlocLabs project, its structure, and the core concepts demonstrated within. Enjoy exploring the code! 🎉
+## 🧩 Composition & App Wiring
+
+```46:59:lib/main.dart
+return MultiBlocProvider(
+  providers: [
+    BlocProvider<CounterBloc>(create: (context) => CounterBloc()),
+    BlocProvider<SwitchBloc>(create: (context) => SwitchBloc()),
+    BlocProvider<SliderBloc>(create: (context) => SliderBloc()),
+    BlocProvider<ImagePickerBloc>(create: (context) => ImagePickerBloc(ImagePickerUtils())),
+  ],
+  child: MaterialApp(
+    debugShowCheckedModeBanner: false,
+    theme: ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: Colors.green)),
+    home: ImagePickerScreen(),
+  ),
+);
+```
+
+- **Home Screen**: currently `ImagePickerScreen`.
+- Replace `home` with `CounterScreen` or `SliderAndSwitchScreen` to explore other demos.
+
+---
+
+## 🔄 Interaction Flow (Visual)
+
+```mermaid
+sequenceDiagram
+  actor User
+  participant UI as Screen Widgets
+  participant Bloc as Feature BLoC
+  participant Utils as ImagePickerUtils
+
+  User->>UI: Tap Camera/Gallery
+  UI->>Bloc: add(CameraCapture | GalleryImagePicker)
+  Bloc->>Utils: pickImage(source)
+  Utils-->>Bloc: XFile
+  Bloc-->>UI: emit(ImagePickerState(image))
+  UI-->>User: Renders selected image
+```
+
+---
+
+## 📑 Reference Table of Key Types
+
+| Area | File | Types | Purpose |
+|------|------|-------|---------|
+| App | `lib/main.dart` | `MyApp` | BLoC providers and app theme/home |
+| Counter | `counter_bloc.dart` | `CounterBloc` | Business logic for counter |
+| Counter | `counter_event.dart` | `IncrementCounter`, `DecrementCounter` | User intents |
+| Counter | `counter_state.dart` | `CounterState` | Counter value snapshot |
+| Slider | `slider_bloc.dart` | `SliderBloc` | Opacity control |
+| Slider | `slider_event.dart` | `ChangeOpacity` | New opacity value |
+| Slider | `slider_state.dart` | `SliderState` | Holds current opacity |
+| Switch | `switch_bloc.dart` | `SwitchBloc` | Notification toggle |
+| Switch | `switch_event.dart` | `EnableOrDisableNotification` | Toggle intent |
+| Switch | `switch_state.dart` | `SwitchState` | Holds toggle state |
+| Image Picker | `image_picker_bloc.dart` | `ImagePickerBloc` | Picks/captures image |
+| Image Picker | `image_picker_event.dart` | `CameraCapture`, `GalleryImagePicker` | Source selection |
+| Image Picker | `image_picker_state.dart` | `ImagePickerState` | Holds `XFile?` |
+| Image Picker | `image_picker_utils.dart` | `ImagePickerUtils` | Thin wrapper around `ImagePicker` |
+| Equatable | `equatable_demo.dart` | `Person`, `NewPerson` | Equality demo |
+
+---
+
+## 🧠 Notable Techniques
+
+- **`buildWhen`**: minimizes rebuilds in `SliderAndSwitchScreen`.
+- **`copyWith`** patterns: safe immutable updates across states.
+- **Separation of concerns**: UI ↔ Events/States ↔ Bloc ↔ Utils.
+- **Constructor injection**: `ImagePickerBloc(ImagePickerUtils())` enables testing/mocking.
+
+---
+
+## ✅ How to Explore Demos Quickly
+
+- Set different home screens in `lib/main.dart`:
+  - `home: CounterScreen()`
+  - `home: SliderAndSwitchScreen()`
+  - `home: ImagePickerScreen()` (default)
+  - `home: EquatableDemoScreen()`
+
+---
+
+## 📌 Notes
+
+- Project targets Dart SDK `^3.9.2` and uses modern Flutter APIs.
+- Android/iOS scaffolding and assets are standard Flutter template outputs.
+
+---
+
+Made with ❤️ using Flutter and BLoC.
+
