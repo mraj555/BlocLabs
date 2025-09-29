@@ -5,6 +5,8 @@ import 'package:bloclabs/image_picker_demo/ui/image_picker_screen.dart';
 import 'package:bloclabs/image_picker_demo/utils/image_picker_utils.dart';
 import 'package:bloclabs/slider_and_switch_demo/bloc/slider/slider_bloc.dart';
 import 'package:bloclabs/slider_and_switch_demo/ui/slider_and_switch_screen.dart';
+import 'package:bloclabs/todo_app/bloc/todo_bloc.dart';
+import 'package:bloclabs/todo_app/ui/todo_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -50,11 +52,12 @@ class MyApp extends StatelessWidget {
         BlocProvider<SwitchBloc>(create: (context) => SwitchBloc()),
         BlocProvider<SliderBloc>(create: (context) => SliderBloc()),
         BlocProvider<ImagePickerBloc>(create: (context) => ImagePickerBloc(ImagePickerUtils())),
+        BlocProvider<ToDoBloc>(create: (context) => ToDoBloc()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: Colors.green)),
-        home: ImagePickerScreen(),
+        home: TodoScreen(),
       ),
     );
   }
