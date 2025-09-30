@@ -1,5 +1,8 @@
 import 'package:bloclabs/counter_app/ui/counter_screen.dart';
 import 'package:bloclabs/equatable_demo/equatable_demo.dart';
+import 'package:bloclabs/favourite_app/bloc/favourite_bloc.dart';
+import 'package:bloclabs/favourite_app/repository/favourite_repository.dart';
+import 'package:bloclabs/favourite_app/ui/favourite_app_screen.dart';
 import 'package:bloclabs/image_picker_demo/bloc/image_picker_bloc.dart';
 import 'package:bloclabs/image_picker_demo/ui/image_picker_screen.dart';
 import 'package:bloclabs/image_picker_demo/utils/image_picker_utils.dart';
@@ -53,11 +56,12 @@ class MyApp extends StatelessWidget {
         BlocProvider<SliderBloc>(create: (context) => SliderBloc()),
         BlocProvider<ImagePickerBloc>(create: (context) => ImagePickerBloc(ImagePickerUtils())),
         BlocProvider<ToDoBloc>(create: (context) => ToDoBloc()),
+        BlocProvider<FavouriteBloc>(create: (context) => FavouriteBloc(FavouriteRepository())),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: Colors.green)),
-        home: TodoScreen(),
+        theme: ThemeData(useMaterial3: true, brightness: Brightness.dark),
+        home: FavouriteAppScreen(),
       ),
     );
   }

@@ -1,175 +1,134 @@
-<div align="center">
+# BlocLabs 🔷 Flutter BLoC Showcase
 
-# 🎯 BlocLabs — Flutter BLoC Demos
+![Flutter](https://img.shields.io/badge/Flutter-3.x-02569B?logo=flutter&logoColor=white) ![Dart](https://img.shields.io/badge/Dart-3.x-0175C2?logo=dart&logoColor=white) ![flutter_bloc](https://img.shields.io/badge/flutter__bloc-8.x-4ECDC4) ![equatable](https://img.shields.io/badge/equatable-2.x-45B7D1) ![image_picker](https://img.shields.io/badge/image__picker-1.x-FF9F1C)
 
-![Flutter](https://img.shields.io/badge/Flutter-3.x-02569B?logo=flutter&logoColor=white)
-![Dart](https://img.shields.io/badge/Dart-3.x-0175C2?logo=dart&logoColor=white)
-![flutter_bloc](https://img.shields.io/badge/flutter__bloc-%E2%9A%A1-4CAF50)
-![equatable](https://img.shields.io/badge/equatable-%F0%9F%94%97-673AB7)
-![Image Picker](https://img.shields.io/badge/image__picker-%F0%9F%93%B7-FF9800)
-
-<i>A compact showcase of BLoC architecture with multiple mini-features: Counter, Slider & Switch, Image Picker, ToDo, and an Equatable comparison demo.</i>
-
-</div>
+> A compact, portfolio-ready Flutter project demonstrating clean BLoC state management across multiple mini-features: Counter, Slider & Switch, Favourites, Image Picker, ToDo, and an Equatable comparison demo.
 
 ---
 
-## 🌈 Overview
+## ✨ Highlights
+- **Clean Architecture with BLoC**: Events → BLoC → Immutable States → UI.
+- **Feature-first organization** with dedicated `bloc`, `ui`, `model`, and `repository` where applicable.
+- **Real widgets** using `BlocBuilder`, `context.read<T>().add(...)`, and `copyWith` state transitions.
+- **Async repository pattern** (mocked) for list fetching in the Favourites feature.
 
-BlocLabs demonstrates clean state management using the BLoC pattern across several independent features. Each module uses dedicated `Bloc`, `Event`, and `State` classes and a lightweight UI screen to visualize behavior.
+---
 
-- **Counter App**: Increment/decrement integers with `CounterBloc`.
-- **Slider & Switch Demo**: Control opacity and notification toggle with two blocs and selective rebuilds.
-- **Image Picker Demo**: Pick from camera or gallery via a BLoC that wraps `image_picker`.
-- **ToDo App**: Add/remove in-memory tasks using `ToDoBloc`.
-- **Equatable Demo**: Understand value equality vs reference equality with and without `equatable`.
-
-
-## 📁 Project Structure
+## 📁 Folder Structure & Architecture
 
 ```text
 lib/
-├── main.dart                         # App entry, registers all blocs and sets home
-├── counter_app/
-│   ├── bloc/
-│   │   ├── counter_bloc.dart         # Business logic for increment/decrement
-│   │   ├── counter_event.dart        # IncrementCounter, DecrementCounter
-│   │   └── counter_state.dart        # CounterState(counter)
-│   └── ui/
-│       └── counter_screen.dart       # UI with two buttons and live count
-├── slider_and_switch_demo/
-│   ├── bloc/
-│   │   ├── slider/                   # SliderBloc, ChangeOpacity, SliderState
-│   │   └── switch/                   # SwitchBloc, EnableOrDisableNotification, SwitchState
-│   └── ui/
-│       └── slider_and_switch_screen.dart
-├── image_picker_demo/
-│   ├── bloc/                         # ImagePickerBloc + events + state
-│   ├── ui/
-│   │   └── image_picker_screen.dart
-│   └── utils/
-│       └── image_picker_utils.dart   # Camera/Gallery wrappers
-├── todo_app/
-│   ├── bloc/                         # ToDoBloc + events + state
-│   └── ui/
-│       └── todo_screen.dart
-└── equatable_demo/
-    └── equatable_demo.dart           # Value vs reference equality example
+  main.dart                        # App entry, MultiBlocProvider
+  counter_app/
+    bloc/                          # Counter BLoC (events, states, bloc)
+    ui/                            # CounterScreen UI
+  equatable_demo/
+    equatable_demo.dart            # Equatable vs manual equality demo
+  favourite_app/
+    bloc/                          # Favourite BLoC (events, states, bloc)
+    model/                         # FavouriteItemModel
+    repository/                    # FavouriteRepository (mock data)
+    ui/                            # FavouriteAppScreen UI
+  image_picker_demo/
+    bloc/                          # ImagePicker BLoC (events, states, bloc)
+    ui/                            # ImagePickerScreen UI
+    utils/                         # ImagePickerUtils wrapper
+  slider_and_switch_demo/
+    bloc/
+      slider/                      # Slider BLoC (opacity)
+      switch/                      # Switch BLoC (notifications)
+    ui/                            # SliderAndSwitchScreen UI
+  todo_app/
+    bloc/                          # ToDo BLoC (events, states, bloc)
+    ui/                            # TodoScreen UI
 ```
 
+- **Pattern**: Each feature encapsulates its own `bloc` (Events, States, Bloc), UI screen(s), and optional `model`/`repository`.
+- **State immutability**: `Equatable`-based states and simple `copyWith` transitions.
 
-## 🧩 Architecture & Data Flow
+---
 
-All features follow the same BLoC pattern:
+## 🏗️ App Bootstrap
 
-```mermaid
-flowchart LR
-  UI[Widget] -- add(Event) --> BLoC
-  BLoC -- emit(State) --> UI
-  BLoC -- use --> Utils[(Services)]
+```dart
+// lib/main.dart (excerpt)
+return MultiBlocProvider(
+  providers: [
+    BlocProvider<CounterBloc>(create: (_) => CounterBloc()),
+    BlocProvider<SwitchBloc>(create: (_) => SwitchBloc()),
+    BlocProvider<SliderBloc>(create: (_) => SliderBloc()),
+    BlocProvider<ImagePickerBloc>(create: (_) => ImagePickerBloc(ImagePickerUtils())),
+    BlocProvider<ToDoBloc>(create: (_) => ToDoBloc()),
+    BlocProvider<FavouriteBloc>(create: (_) => FavouriteBloc(FavouriteRepository())),
+  ],
+  child: MaterialApp(
+    debugShowCheckedModeBanner: false,
+    theme: ThemeData(useMaterial3: true, brightness: Brightness.dark),
+    home: FavouriteAppScreen(),
+  ),
+);
 ```
 
-- **Events** signal intentions from UI (e.g., `IncrementCounter`, `ChangeOpacity`).
-- **Bloc** reacts to events, computes new state, and `emit`s it.
-- **States** are immutable snapshots consumed by `BlocBuilder` widgets for reactive UI updates.
-- **Utilities/Services** (e.g., `ImagePickerUtils`) encapsulate platform APIs and are injected into blocs.
+---
 
+## 📦 Features Overview
 
-## 🚀 App Entry and BLoC Wiring
+### 1) Counter App 🔢
+- **Purpose**: Simple increment/decrement counter with BLoC.
+- **Key classes**:
+  - `CounterEvent` → `IncrementCounter`, `DecrementCounter`
+  - `CounterState` → `counter: int`
+  - `CounterBloc` → handles events and emits new counter values
+- **UI**: `CounterScreen` renders the count and buttons that dispatch events.
 
-```16:64:lib/main.dart
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<CounterBloc>(create: (context) => CounterBloc()),
-        BlocProvider<SwitchBloc>(create: (context) => SwitchBloc()),
-        BlocProvider<SliderBloc>(create: (context) => SliderBloc()),
-        BlocProvider<ImagePickerBloc>(create: (context) => ImagePickerBloc(ImagePickerUtils())),
-        BlocProvider<ToDoBloc>(create: (context) => ToDoBloc()),
-      ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: Colors.green)),
-        home: TodoScreen(),
-      ),
-    );
-  }
-}
-```
-
-- **Why MultiBlocProvider?** It provides all blocs at the root so feature screens can access them via `context.read<T>()` and `BlocBuilder<T, S>`.
-
-
-## 🧮 Counter App
-
-### Core Types
-
-```1:18:lib/counter_app/bloc/counter_bloc.dart
+```dart
+// lib/counter_app/bloc/counter_bloc.dart (excerpt)
 class CounterBloc extends Bloc<CounterEvent, CounterState> {
   CounterBloc() : super(const CounterState()) {
     on<IncrementCounter>(_onIncrement);
     on<DecrementCounter>(_onDecrement);
   }
-
   void _onIncrement(IncrementCounter event, Emitter<CounterState> emit) {
     emit(state.copyWith(counter: state.counter + 1));
   }
-
   void _onDecrement(DecrementCounter event, Emitter<CounterState> emit) {
     emit(state.copyWith(counter: state.counter - 1));
   }
 }
 ```
 
-```3:14:lib/counter_app/bloc/counter_state.dart
-class CounterState extends Equatable {
-  final int counter;
+```dart
+// lib/counter_app/ui/counter_screen.dart (excerpt)
+ElevatedButton.icon(
+  onPressed: () => context.read<CounterBloc>().add(IncrementCounter()),
+  label: const Text("Increment"),
+  icon: const Icon(Icons.add_circle_rounded),
+),
+```
 
-  const CounterState({this.counter = 0});
+---
 
-  CounterState copyWith({int? counter}) {
-    return CounterState(counter: counter ?? this.counter);
+### 2) Slider & Switch Demo 🎚️🔔
+- **Purpose**: Demonstrates two independent BLoCs: one for a boolean switch, one for a slider-driven opacity.
+- **Key classes**:
+  - `SwitchBloc` + `EnableOrDisableNotification` → toggles `SwitchState.isNotification`.
+  - `SliderBloc` + `ChangeOpacity(opacity)` → updates `SliderState.opacity`.
+- **UI**: `SliderAndSwitchScreen` uses `BlocBuilder` with `buildWhen` to avoid unnecessary rebuilds.
+
+```dart
+// lib/slider_and_switch_demo/bloc/switch/switch_bloc.dart (excerpt)
+class SwitchBloc extends Bloc<SwitchEvent, SwitchState> {
+  SwitchBloc() : super(SwitchState()) {
+    on<EnableOrDisableNotification>(_onEnableOrDisableNotification);
   }
-
-  @override
-  List<Object?> get props => [counter];
+  void _onEnableOrDisableNotification(EnableOrDisableNotification e, Emitter<SwitchState> emit) {
+    emit(state.copyWith(isNotification: !state.isNotification));
+  }
 }
 ```
 
-### UI Interaction
-
-```20:41:lib/counter_app/ui/counter_screen.dart
-BlocBuilder<CounterBloc, CounterState>(
-  builder: (context, state) {
-    return Text("${state.counter}", style: TextStyle(fontSize: 60));
-  },
-),
-...
-ElevatedButton.icon(
-  onPressed: () => context.read<CounterBloc>().add(IncrementCounter()),
-  label: Text("Increment"),
-  icon: Icon(Icons.add_circle_rounded),
-),
-```
-
-### Flow
-
-- Tap button ➜ `IncrementCounter` ➜ `CounterBloc` increments ➜ emits new `CounterState` ➜ text updates.
-
-
-## 🎚️ Slider & 🔔 Switch Demo
-
-Two independent blocs drive two separate UI elements. Both use `buildWhen` to avoid unnecessary rebuilds.
-
-```41:51:lib/slider_and_switch_demo/ui/slider_and_switch_screen.dart
+```dart
+// lib/slider_and_switch_demo/ui/slider_and_switch_screen.dart (excerpt)
 BlocBuilder<SliderBloc, SliderState>(
   buildWhen: (previous, current) => previous.opacity != current.opacity,
   builder: (context, state) => Slider(
@@ -179,200 +138,274 @@ BlocBuilder<SliderBloc, SliderState>(
 ),
 ```
 
-```27:36:lib/slider_and_switch_demo/ui/slider_and_switch_screen.dart
-BlocBuilder<SwitchBloc, SwitchState>(
-  buildWhen: (previous, current) => previous.isNotification != current.isNotification,
-  builder: (context, state) {
-    return Switch(
-      value: state.isNotification,
-      onChanged: (value) => context.read<SwitchBloc>().add(EnableOrDisableNotification()),
-    );
-  },
+---
+
+### 3) Favourites App ❤️
+- **Purpose**: Manage a list of items with selectable (temporary) and favourite states; supports bulk delete of selected items and toggle favourite.
+- **Data source**: `FavouriteRepository` simulates async fetching with `Future.delayed`.
+- **Key classes**:
+  - `FavouriteItemModel` → `id`, `value`, `isFavourite`
+  - `FavouriteEvents` → `FetchFavouriteList`, `AddFavouriteItem`, `SelectItem`, `UnSelectItem`, `DeleteItem`
+  - `FavouriteState` → `items`, `temp_items`, `status: ListStatus`
+  - `FavouriteBloc` → orchestrates selection, toggling, deletion, and initial fetch
+
+```dart
+// lib/favourite_app/repository/favourite_repository.dart (excerpt)
+class FavouriteRepository {
+  Future<List<FavouriteItemModel>> onFetchItems() async {
+    await Future.delayed(const Duration(seconds: 3));
+    return List.of(_onGenerateList(12));
+  }
+}
+```
+
+```dart
+// lib/favourite_app/bloc/favourite_bloc.dart (excerpt)
+FavouriteBloc(this.repository) : super(const FavouriteState()) {
+  on<FetchFavouriteList>(onFetchList);
+  add(FetchFavouriteList());
+  on<AddFavouriteItem>(_onAddFavouriteItem);
+  on<SelectItem>(_onSelectItem);
+  on<UnSelectItem>(_onUnSelectItem);
+  on<DeleteItem>(_onDeleteItems);
+}
+```
+
+```dart
+// lib/favourite_app/ui/favourite_app_screen.dart (excerpt)
+IconButton(
+  onPressed: () => context.read<FavouriteBloc>().add(DeleteItem()),
+  icon: const Icon(Icons.delete_rounded),
+  color: Colors.red,
 ),
 ```
 
-### Flow
+- **States**:
+  - `loading` → show `CircularProgressIndicator`
+  - `success` → show list with selectable checkboxes and favourite toggle
+  - `failure` → show error message
 
-- Slide ➜ `ChangeOpacity(opacity)` ➜ `SliderBloc` emits `SliderState.opacity` ➜ container/slider reflect new value.
-- Toggle switch ➜ `EnableOrDisableNotification` ➜ `SwitchBloc` flips `isNotification` ➜ switch reflects state.
+---
 
+### 4) Image Picker 📸🖼️
+- **Purpose**: Pick an image from camera or gallery using `image_picker`, managed by BLoC.
+- **Key classes**:
+  - `ImagePickerUtils` → wraps `ImagePicker` calls
+  - `ImagePickerEvent` → `CameraCapture`, `GalleryImagePicker`
+  - `ImagePickerState` → optional `XFile image`
+  - `ImagePickerBloc` → invokes utils, emits selected file
+- **UI**: `ImagePickerScreen` displays two actions until an image is chosen, then renders it.
 
-## 🖼️ Image Picker Demo
-
-The bloc delegates platform I/O to `ImagePickerUtils`, keeping the bloc pure.
-
-```7:24:lib/image_picker_demo/bloc/image_picker_bloc.dart
-class ImagePickerBloc extends Bloc<ImagePickerEvent, ImagePickerState> {
-  final ImagePickerUtils utils;
-
-  ImagePickerBloc(this.utils) : super(ImagePickerState()) {
-    on<CameraCapture>(_onCameraCapture);
-    on<GalleryImagePicker>(_onGalleryImagePicker);
-  }
-
-  Future<void> _onCameraCapture(CameraCapture event, Emitter<ImagePickerState> emit) async {
-    XFile? file = await utils.onCameraCapture();
-    emit(state.copyWith(image: file));
-  }
+```dart
+// lib/image_picker_demo/bloc/image_picker_bloc.dart (excerpt)
+Future<void> _onGalleryImagePicker(GalleryImagePicker event, Emitter<ImagePickerState> emit) async {
+  final XFile? file = await utils.onPickFromGallery();
+  emit(state.copyWith(image: file));
 }
 ```
 
-```20:37:lib/image_picker_demo/ui/image_picker_screen.dart
-return state.image == null
-  ? Row(
-      children: [
-        InkWell(
-          onTap: () => context.read<ImagePickerBloc>().add(CameraCapture()),
-          child: CircleAvatar(child: Icon(Icons.camera)),
-        ),
-        ...
-      ],
-    )
-  : Image.file(File(state.image!.path));
-```
+---
 
-### Flow
+### 5) ToDo App ✅
+- **Purpose**: Minimal ToDo list with add/remove functionality.
+- **Key classes**:
+  - `ToDoEvent` → `AddToDoEvent(task)`, `RemoveToDoEvent(task)`
+  - `ToDoState` → `todos: List<String>`
+  - `ToDoBloc` → manages an internal list and emits copies via `copyWith`
+- **UI**: `TodoScreen` shows list or empty state; `FloatingActionButton` adds new tasks.
 
-- Tap camera/gallery ➜ `CameraCapture`/`GalleryImagePicker` ➜ utils picks image ➜ bloc emits `ImagePickerState(image)` ➜ UI shows selected image.
-
-
-## ✅ ToDo App
-
-`ToDoBloc` manages an in-memory list and emits new lists to trigger rebuilds.
-
-```5:27:lib/todo_app/bloc/todo_bloc.dart
-class ToDoBloc extends Bloc<ToDoEvent, ToDoState> {
-  final List<String> _todos = [];
-
-  ToDoBloc() : super(ToDoState()) {
-    on<AddToDoEvent>(_onAddToDoEvent);
-    on<RemoveToDoEvent>(_onRemoveToDoEvent);
-  }
-
-  void _onAddToDoEvent(AddToDoEvent event, Emitter<ToDoState> emit) {
-    _todos.add(event.task);
-    emit(state.copyWith(todos: List.from(_todos)));
-  }
+```dart
+// lib/todo_app/bloc/todo_bloc.dart (excerpt)
+void _onAddToDoEvent(AddToDoEvent event, Emitter<ToDoState> emit) {
+  _todos.add(event.task);
+  emit(state.copyWith(todos: List.from(_todos)));
 }
 ```
 
-```15:41:lib/todo_app/ui/todo_screen.dart
-body: BlocBuilder<ToDoBloc, ToDoState>(
-  builder: (context, state) {
-    if (state.todos.isEmpty) {
-      return Center(child: Text("No ToDos found"));
-    }
-    return ListView.builder(
-      itemCount: state.todos.length,
-      itemBuilder: (context, index) {
-        return ListTile(
-          title: Text(state.todos[index]),
-          trailing: IconButton(
-            onPressed: () => context.read<ToDoBloc>().add(RemoveToDoEvent(task: state.todos[index])),
-            icon: Icon(Icons.delete_rounded),
-          ),
-        );
-      },
-    );
-  },
-),
-```
+---
 
-### Flow
+### 6) Equatable Demo ⚖️
+- **Purpose**: Illustrate equality semantics with and without `equatable`.
+- **Key classes**:
+  - `Person` (manual equality and `hashCode`)
+  - `NewPerson extends Equatable` (auto equality via `props`)
 
-- FAB tap ➜ `AddToDoEvent('Task: N')` ➜ bloc clones and emits new list ➜ list updates.
-- Delete tap ➜ `RemoveToDoEvent(task)` ➜ bloc removes and emits ➜ list updates.
-
-
-## 🧪 Equatable Demo
-
-Demonstrates how `equatable` simplifies value equality.
-
-```48:61:lib/equatable_demo/equatable_demo.dart
-class Person {
-  final String name;
-  final int age;
-
-  const Person({required this.name, required this.age});
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) || other is Person && runtimeType == other.runtimeType && name == other.name && age == other.age;
-
-  @override
-  int get hashCode => name.hashCode ^ age.hashCode;
-}
-```
-
-```63:72:lib/equatable_demo/equatable_demo.dart
+```dart
+// lib/equatable_demo/equatable_demo.dart (excerpt)
 class NewPerson extends Equatable {
   final String name;
   final int age;
-
   const NewPerson({required this.name, required this.age});
-
   @override
   List<Object?> get props => [name, age];
 }
 ```
 
+---
 
-## 🧭 App Flow (High-level)
+## 🔄 Data Flow (BLoC)
 
 ```mermaid
-flowchart TD
-  A[MyApp] --> B{Home Screen}
-  B -->|Current| T[TodoScreen]
-  B --> C[CounterScreen]
-  B --> D[SliderAndSwitchScreen]
-  B --> E[ImagePickerScreen]
-
-  subgraph Counter
-    C --> C1[Increment Button]
-    C1 --> C2((IncrementCounter)) --> C3[CounterBloc] --> C4[CounterState]
-  end
-
-  subgraph Slider & Switch
-    D --> S1[Slider drag] --> S2((ChangeOpacity)) --> S3[SliderBloc] --> S4[SliderState]
-    D --> W1[Toggle switch] --> W2((EnableOrDisableNotification)) --> W3[SwitchBloc] --> W4[SwitchState]
-  end
-
-  subgraph Image Picker
-    E --> P1[Tap Camera/Gallery] --> P2((Event)) --> P3[ImagePickerBloc] --> P4[ImagePickerState] --> P5[UI shows image]
-  end
-
-  subgraph ToDo
-    T --> T1[FAB tap] --> T2((AddToDoEvent)) --> T3[ToDoBloc] --> T4[ToDoState]
-    T --> T5[Delete tap] --> T6((RemoveToDoEvent)) --> T3 --> T4
-  end
+flowchart LR
+  UI[UI Widgets] -- dispatch Event --> BLoC
+  BLoC -- handle --> Logic
+  Logic -- emit State --> BLoC
+  BLoC -- build via BlocBuilder --> UI
 ```
 
-
-## 📚 Key Takeaways
-
-- **Single-responsibility blocs** per feature keep logic isolated and testable.
-- **Equatable** ensures cheap, predictable rebuilds by value-based equality on states/events.
-- **Selective rebuilds** via `buildWhen` optimize UI performance.
-- **Service abstraction** (`ImagePickerUtils`) keeps side-effects out of blocs.
-
-
-## 🧱 Tech Stack
-
-| Area | Tools |
-|---|---|
-| Framework | Flutter, Material Design |
-| Language | Dart |
-| State Management | `bloc`, `flutter_bloc`, `equatable` |
-| Media | `image_picker` |
-
-
-## 🎯 Next Ideas
-
-- Add navigation menu to switch between all demo screens.
-- Persist ToDos locally (e.g., Hive) and add unit tests.
-- Extract common UI components and theme constants.
+- **Event**: triggered by UI interactions (button taps, toggles, slider changes).
+- **BLoC**: business logic transforms events into new immutable states.
+- **State**: immutable data consumed by UI via `BlocBuilder`.
 
 ---
 
-<sub>Made with ❤️ using BLoC pattern.</sub>
+## 🗺️ App Flow Diagrams
 
+### Favourite App Flow
+```mermaid
+sequenceDiagram
+  participant U as User
+  participant UI as FavouriteAppScreen
+  participant B as FavouriteBloc
+  participant R as FavouriteRepository
+
+  U->>UI: Open screen
+  UI->>B: add(FetchFavouriteList)
+  B->>R: onFetchItems()
+  R-->>B: List<FavouriteItemModel>
+  B-->>UI: state = success(items)
+
+  U->>UI: Toggle checkbox
+  UI->>B: add(SelectItem/UnSelectItem)
+  B-->>UI: state.temp_items updated
+
+  U->>UI: Tap heart icon
+  UI->>B: add(AddFavouriteItem)
+  B-->>UI: state.items updated
+
+  U->>UI: Tap delete (if selected)
+  UI->>B: add(DeleteItem)
+  B-->>UI: items filtered, temp cleared
+```
+
+### Image Picker Flow
+```mermaid
+sequenceDiagram
+  participant U as User
+  participant UI as ImagePickerScreen
+  participant B as ImagePickerBloc
+  participant S as ImagePickerUtils
+  participant P as image_picker
+
+  U->>UI: Tap Camera/Gallery
+  UI->>B: add(CameraCapture/GalleryImagePicker)
+  B->>S: onCameraCapture/onPickFromGallery
+  S->>P: pickImage(source)
+  P-->>S: XFile?
+  S-->>B: XFile?
+  B-->>UI: state.image updated
+  UI-->>U: Renders chosen image
+```
+
+---
+
+## 🧩 Key Concepts Used
+- **`flutter_bloc`**: `BlocProvider`, `BlocBuilder`, event handlers via `on<Event>`.
+- **`equatable`**: Lightweight value equality for states/events/models.
+- **`copyWith` pattern**: Immutable state transitions.
+- **Repository pattern**: Async data source abstraction (`FavouriteRepository`).
+- **Separation of concerns**: UI is passive, BLoC holds logic.
+
+---
+
+## 🎯 Quick Reference Tables
+
+### Counter
+| Component | Location | Notes |
+|---|---|---|
+| Events | `counter_event.dart` | `IncrementCounter`, `DecrementCounter` |
+| State | `counter_state.dart` | `counter: int` |
+| Bloc | `counter_bloc.dart` | Adds/subtracts; emits `copyWith` |
+| UI | `counter_screen.dart` | Two buttons dispatch events |
+
+### Slider & Switch
+| Component | Location | Notes |
+|---|---|---|
+| Switch Bloc | `switch_bloc.dart` | Toggles notifications |
+| Slider Bloc | `slider_bloc.dart` | Changes opacity |
+| UI | `slider_and_switch_screen.dart` | `buildWhen` optimizations |
+
+### Favourites
+| Component | Location | Notes |
+|---|---|---|
+| Model | `favourite_item_model.dart` | `id`, `value`, `isFavourite` |
+| Repo | `favourite_repository.dart` | Mock fetch with delay |
+| Events | `favourite_event.dart` | Fetch, Select/Unselect, Add, Delete |
+| State | `favourite_state.dart` | `items`, `temp_items`, `status` |
+| Bloc | `favourite_bloc.dart` | Selection, toggle fav, bulk delete |
+| UI | `favourite_app_screen.dart` | List, checkbox, heart, delete |
+
+### Image Picker
+| Component | Location | Notes |
+|---|---|---|
+| Utils | `image_picker_utils.dart` | Camera/Gallery wrappers |
+| Events | `image_picker_event.dart` | Capture or pick |
+| State | `image_picker_state.dart` | `XFile? image` |
+| Bloc | `image_picker_bloc.dart` | Emits chosen file |
+| UI | `image_picker_screen.dart` | Renders image or actions |
+
+### ToDo
+| Component | Location | Notes |
+|---|---|---|
+| Events | `todo_event.dart` | Add/Remove |
+| State | `todo_state.dart` | `todos: List<String>` |
+| Bloc | `todo_bloc.dart` | Internal list + `copyWith` |
+| UI | `todo_screen.dart` | FAB adds tasks, delete removes |
+
+---
+
+## 🖌️ UI Glimpses (Code Excerpts)
+
+```dart
+// Checkbox selection in favourites
+Checkbox(
+  value: state.temp_items.contains(item),
+  onChanged: (value) {
+    if (value == true) {
+      context.read<FavouriteBloc>().add(SelectItem(item: item));
+    } else {
+      context.read<FavouriteBloc>().add(UnSelectItem(item: item));
+    }
+  },
+)
+```
+
+```dart
+// Todo: add new task
+FloatingActionButton(
+  onPressed: () {
+    final length = context.read<ToDoBloc>().state.todos.length;
+    context.read<ToDoBloc>().add(AddToDoEvent(task: 'Task: ${length + 1}'));
+  },
+  child: const Icon(Icons.add_rounded, size: 25),
+)
+```
+
+---
+
+## 🛠️ Tech Used
+- **Flutter** (Material 3 theme, dark mode)
+- **Dart** (null-safety)
+- **flutter_bloc** for BLoC pattern
+- **equatable** for value equality
+- **image_picker** for camera/gallery integration
+
+---
+
+## 📌 Notes
+- The app’s home is set to `FavouriteAppScreen()` in `main.dart`. Swap to other screens for demos.
+- All states and events are `equatable` where applicable to ensure efficient widget rebuilds.
+
+---
+
+Made with ❤️ using Flutter + BLoC.
