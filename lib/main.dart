@@ -3,6 +3,8 @@ import 'package:bloclabs/equatable_demo/equatable_demo.dart';
 import 'package:bloclabs/favourite_app/bloc/favourite_bloc.dart';
 import 'package:bloclabs/favourite_app/repository/favourite_repository.dart';
 import 'package:bloclabs/favourite_app/ui/favourite_app_screen.dart';
+import 'package:bloclabs/filter_api_list_demo/bloc/filter_posts_bloc.dart';
+import 'package:bloclabs/filter_api_list_demo/ui/filter_posts_screen.dart';
 import 'package:bloclabs/get_api_demo/bloc/posts_bloc.dart';
 import 'package:bloclabs/get_api_demo/ui/posts_screen.dart';
 import 'package:bloclabs/image_picker_demo/bloc/image_picker_bloc.dart';
@@ -60,11 +62,12 @@ class MyApp extends StatelessWidget {
         BlocProvider<ToDoBloc>(create: (context) => ToDoBloc()),
         BlocProvider<FavouriteBloc>(create: (context) => FavouriteBloc(FavouriteRepository())),
         BlocProvider<PostsBloc>(create: (context) => PostsBloc()),
+        BlocProvider<FilterPostsBloc>(create: (context) => FilterPostsBloc()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(useMaterial3: true, brightness: Brightness.dark),
-        home: PostsScreen(),
+        home: FilterPostsScreen(),
       ),
     );
   }
