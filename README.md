@@ -7,11 +7,11 @@
 ![BLoC](https://img.shields.io/badge/BLoC-8B5CF6?style=for-the-badge&logo=flutter&logoColor=white)
 ![Material Design](https://img.shields.io/badge/Material%20Design-757575?style=for-the-badge&logo=material-design&logoColor=white)
 
-**A comprehensive Flutter learning project demonstrating BLoC pattern implementation with multiple real-world features**
+**A comprehensive Flutter learning project demonstrating BLoC pattern implementation with multiple real-world examples**
 
 [![Project Status](https://img.shields.io/badge/Status-Active-brightgreen?style=for-the-badge)](#)
-[![Flutter Version](https://img.shields.io/badge/Flutter-3.9.2+-blue?style=for-the-badge)](#)
-[![Dart Version](https://img.shields.io/badge/Dart-3.9.2+-blue?style=for-the-badge)](#)
+[![Architecture](https://img.shields.io/badge/Architecture-BLoC%20Pattern-blue?style=for-the-badge)](#)
+[![Demo Apps](https://img.shields.io/badge/Demo%20Apps-8%20Features-orange?style=for-the-badge)](#)
 
 </div>
 
@@ -21,25 +21,26 @@
 
 - [🎯 Project Overview](#-project-overview)
 - [🏗️ Architecture & Structure](#️-architecture--structure)
-- [✨ Features & Modules](#-features--modules)
+- [✨ Features & Demo Apps](#-features--demo-apps)
+- [📱 App Flow & Navigation](#-app-flow--navigation)
 - [🔧 Technical Implementation](#-technical-implementation)
-- [📱 App Flow & User Experience](#-app-flow--user-experience)
-- [🛠️ Dependencies & Technologies](#️-dependencies--technologies)
-- [📊 Code Examples](#-code-examples)
+- [📊 Data Flow Diagrams](#-data-flow-diagrams)
+- [💻 Code Examples](#-code-examples)
+- [🛠️ Dependencies](#️-dependencies)
 
 ---
 
 ## 🎯 Project Overview
 
-**BlocLabs** is a comprehensive Flutter learning project that demonstrates the **BLoC (Business Logic Component)** pattern through multiple practical implementations. The project showcases various state management scenarios, from simple counter apps to complex API integrations and image handling.
+**BlocLabs** is a comprehensive Flutter learning project that demonstrates the **BLoC (Business Logic Component)** pattern through 8 different real-world scenarios. Each demo showcases different aspects of state management, API integration, and user interactions using the BLoC pattern.
 
 ### 🎨 **Key Highlights**
-- **6 Complete Feature Modules** with real-world implementations
+- **8 Complete Demo Applications** with different use cases
 - **Clean Architecture** following BLoC pattern principles
-- **Material Design 3** with dark theme implementation
-- **API Integration** with JSONPlaceholder for real data fetching
-- **Image Picker** functionality for camera and gallery access
-- **State Management** with proper separation of concerns
+- **Real API Integration** with JSONPlaceholder API
+- **Advanced State Management** with proper error handling
+- **Material Design 3** with dark theme support
+- **Comprehensive Examples** from basic counter to complex filtering
 
 ---
 
@@ -49,47 +50,54 @@
 
 ```
 lib/
-├── 📱 counter_app/              # Basic BLoC implementation
-│   ├── bloc/                    # Business logic layer
-│   │   ├── counter_bloc.dart    # Main BLoC class
-│   │   ├── counter_event.dart   # Event definitions
-│   │   └── counter_state.dart   # State management
-│   └── ui/                      # Presentation layer
-│       └── counter_screen.dart  # UI implementation
+├── 📱 counter_app/                    # Basic Counter Demo
+│   ├── bloc/                         # BLoC Implementation
+│   │   ├── counter_bloc.dart         # Business Logic
+│   │   ├── counter_event.dart        # Events
+│   │   └── counter_state.dart        # States
+│   └── ui/
+│       └── counter_screen.dart       # UI Layer
 │
-├── ❤️ favourite_app/             # Advanced list management
-│   ├── bloc/                    # Complex state handling
-│   ├── model/                   # Data models
-│   ├── repository/              # Data layer
-│   └── ui/                      # Interactive UI
+├── ❤️ favourite_app/                 # Favorites Management
+│   ├── bloc/                         # BLoC + Repository Pattern
+│   ├── model/                        # Data Models
+│   ├── repository/                   # Data Layer
+│   └── ui/
 │
-├── 🌐 get_api_demo/             # API integration
-│   ├── bloc/                    # API state management
-│   ├── model/                   # JSON data models
-│   ├── repository/              # HTTP client
-│   ├── ui/                      # Data display
-│   └── utils/                   # Helper enums
+├── 🔍 filter_api_list_demo/         # API + Search Functionality
+│   ├── bloc/                         # Complex State Management
+│   ├── model/                        # API Models
+│   ├── repository/                   # API Repository
+│   ├── utils/                        # Enums & Utilities
+│   └── ui/
 │
-├── 📸 image_picker_demo/         # Media handling
-│   ├── bloc/                    # Image state management
-│   ├── ui/                      # Camera/Gallery UI
-│   └── utils/                   # Image utilities
+├── 📡 get_api_demo/                  # API Integration
+│   ├── bloc/                         # HTTP BLoC
+│   ├── model/                        # Post Models
+│   ├── repository/                   # API Calls
+│   ├── utils/                        # Status Enums
+│   └── ui/
 │
-├── 🎚️ slider_and_switch_demo/    # Interactive controls
-│   ├── bloc/                    # Multiple BLoCs
-│   │   ├── slider/              # Slider state
-│   │   └── switch/              # Switch state
-│   └── ui/                      # Control interfaces
+├── 📸 image_picker_demo/            # Device Integration
+│   ├── bloc/                         # Image Picker BLoC
+│   ├── utils/                        # Image Utilities
+│   └── ui/
 │
-├── ✅ todo_app/                 # CRUD operations
-│   ├── bloc/                    # Task management
-│   └── ui/                      # Task interface
+├── 🎚️ slider_and_switch_demo/       # UI Controls
+│   ├── bloc/                         # Multiple BLoCs
+│   │   ├── slider/                   # Slider BLoC
+│   │   └── switch/                   # Switch BLoC
+│   └── ui/
 │
-├── 🔍 equatable_demo/           # Data comparison
-└── main.dart                    # App entry point
+├── ✅ todo_app/                     # CRUD Operations
+│   ├── bloc/                         # Todo Management
+│   └── ui/
+│
+├── 🔧 equatable_demo/               # Equatable Package Demo
+└── main.dart                        # App Entry Point
 ```
 
-### 🏛️ **Architecture Pattern**
+### 🏛️ **BLoC Architecture Pattern**
 
 ```mermaid
 graph TB
@@ -98,12 +106,10 @@ graph TB
     C --> D[Data Source]
     
     A --> E[Events]
-    E --> B
     B --> F[States]
+    E --> B
+    B --> F
     F --> A
-    
-    B --> G[Business Logic]
-    C --> H[Data Management]
     
     style A fill:#e1f5fe
     style B fill:#f3e5f5
@@ -113,89 +119,104 @@ graph TB
 
 ---
 
-## ✨ Features & Modules
+## ✨ Features & Demo Apps
 
-### 🔢 **1. Counter App** - Basic BLoC Implementation
-- **Purpose**: Introduction to BLoC pattern fundamentals
-- **Features**: Increment/Decrement counter with state management
-- **Learning Focus**: Event handling, state emission, UI binding
+### 🎯 **1. Counter App** - *Basic BLoC Implementation*
+- **Purpose**: Introduction to BLoC pattern
+- **Features**: Increment/Decrement counter
+- **Learning**: Basic state management, events, and states
 
-```dart
-// Event Definition
-class IncrementCounter extends CounterEvent {}
-class DecrementCounter extends CounterEvent {}
-
-// State Management
-void _onIncrement(IncrementCounter event, Emitter<CounterState> emit) {
-  emit(state.copyWith(counter: state.counter + 1));
-}
-```
-
-### ❤️ **2. Favourite App** - Advanced List Management
-- **Purpose**: Complex state management with multiple operations
+### ❤️ **2. Favorites App** - *Complex State Management*
+- **Purpose**: Multi-item selection and favorites
 - **Features**: 
-  - ✅ Item selection with checkboxes
-  - ❤️ Favourite toggle functionality
-  - 🗑️ Bulk delete operations
-  - 📝 Visual feedback with strikethrough
-- **Learning Focus**: Multi-state management, list operations, UI feedback
+  - Item selection with checkboxes
+  - Favorites toggle
+  - Bulk delete operations
+  - Visual feedback (strikethrough, color changes)
+- **Learning**: Complex state updates, repository pattern
 
-### 🌐 **3. API Integration** - Real Data Fetching
-- **Purpose**: External data integration with error handling
+### 🔍 **3. Filter API List** - *Search & API Integration*
+- **Purpose**: Real API integration with search functionality
 - **Features**:
-  - 📡 HTTP requests to JSONPlaceholder API
-  - 🔄 Loading states management
-  - ❌ Error handling and display
-  - 📋 Dynamic list rendering
-- **Learning Focus**: Async operations, error states, data parsing
+  - Fetch posts from JSONPlaceholder API
+  - Real-time search by email
+  - Loading states and error handling
+  - Empty state management
+- **Learning**: API integration, search algorithms, error handling
 
-```dart
-// API Repository Implementation
-Future<List<PostModel>> onFetchPosts() async {
-  final response = await http.get(
-    Uri.parse('https://jsonplaceholder.typicode.com/comments'),
-    headers: {'Content-Type': 'application/json'},
-  );
-  
-  if (response.statusCode == 200) {
-    final posts = json.decode(response.body) as List;
-    return posts.map((e) => PostModel.fromJson(e)).toList();
-  }
-  throw Exception("Error on fetching posts");
-}
-```
+### 📡 **4. Get API Demo** - *HTTP Integration*
+- **Purpose**: Simple API data fetching
+- **Features**:
+  - Fetch and display posts
+  - Loading indicators
+  - Error state handling
+- **Learning**: HTTP requests, JSON parsing, async operations
 
-### 📸 **4. Image Picker** - Media Handling
+### 📸 **5. Image Picker Demo** - *Device Integration*
 - **Purpose**: Camera and gallery integration
 - **Features**:
-  - 📷 Camera capture functionality
-  - 🖼️ Gallery image selection
-  - 🖼️ Image preview and display
-- **Learning Focus**: Platform-specific features, file handling
+  - Camera capture
+  - Gallery selection
+  - Image display
+- **Learning**: Device permissions, file handling, image display
 
-### 🎚️ **5. Slider & Switch** - Interactive Controls
-- **Purpose**: Real-time UI updates with multiple BLoCs
+### 🎚️ **6. Slider & Switch Demo** - *UI Controls*
+- **Purpose**: Interactive UI controls with state
 - **Features**:
-  - 🎚️ Opacity slider with live preview
-  - 🔔 Notification toggle switch
-  - 🎨 Dynamic color changes
-- **Learning Focus**: Multiple BLoC coordination, real-time updates
+  - Opacity slider with visual feedback
+  - Notification switch
+  - Real-time UI updates
+- **Learning**: UI state management, buildWhen optimization
 
-### ✅ **6. Todo App** - CRUD Operations
-- **Purpose**: Complete CRUD functionality
+### ✅ **7. Todo App** - *CRUD Operations*
+- **Purpose**: Create, Read, Update, Delete operations
 - **Features**:
-  - ➕ Add new tasks
-  - 🗑️ Delete existing tasks
-  - 📋 Task list management
-- **Learning Focus**: CRUD operations, list state management
+  - Add new tasks
+  - Remove tasks
+  - Dynamic task management
+- **Learning**: List management, CRUD operations
 
-### 🔍 **7. Equatable Demo** - Data Comparison
+### 🔧 **8. Equatable Demo** - *Object Comparison*
 - **Purpose**: Understanding object equality
 - **Features**:
-  - 🔄 Manual vs automatic comparison
-  - 📊 Hash code generation
-  - ⚡ Performance optimization
-- **Learning Focus**: Object equality, performance considerations
+  - Manual equality implementation
+  - Equatable package usage
+  - Hash code comparison
+- **Learning**: Object comparison, Equatable package benefits
+
+---
+
+## 📱 App Flow & Navigation
+
+### 🎬 **Application Flow Diagram**
+
+```mermaid
+graph TD
+    A[App Start] --> B[MultiBlocProvider Setup]
+    B --> C[FilterPostsScreen - Main Screen]
+    
+    C --> D[Search Functionality]
+    C --> E[API Data Display]
+    
+    D --> F[Real-time Search]
+    E --> G[Loading States]
+    E --> H[Error Handling]
+    
+    style A fill:#4caf50
+    style C fill:#2196f3
+    style D fill:#ff9800
+    style E fill:#9c27b0
+```
+
+### 🎯 **User Interaction Flow**
+
+| **Action** | **Component** | **Result** |
+|------------|---------------|------------|
+| **App Launch** | `main.dart` | MultiBlocProvider initializes all BLoCs |
+| **Search Input** | `FilterPostsScreen` | Triggers `SearchItem` event |
+| **API Call** | `FilterPostsBloc` | Fetches data from JSONPlaceholder |
+| **State Update** | `FilterPostsState` | UI rebuilds with new data |
+| **Error Handling** | `FilterPostsBloc` | Shows error message to user |
 
 ---
 
@@ -203,14 +224,89 @@ Future<List<PostModel>> onFetchPosts() async {
 
 ### 🏗️ **BLoC Pattern Implementation**
 
-| Component | Purpose | Implementation |
-|-----------|---------|----------------|
-| **Events** | User actions | `abstract class CounterEvent extends Equatable` |
-| **States** | UI representation | `class CounterState extends Equatable` |
-| **BLoC** | Business logic | `class CounterBloc extends Bloc<Event, State>` |
-| **Repository** | Data layer | `class PostRepository` |
+#### **1. Event-Driven Architecture**
+```dart
+// Event Definition
+abstract class FilterPostsEvent extends Equatable {
+  const FilterPostsEvent();
+}
 
-### 🔄 **State Management Flow**
+class SearchItem extends FilterPostsEvent {
+  final String item;
+  const SearchItem(this.item);
+  
+  @override
+  List<Object?> get props => [item];
+}
+```
+
+#### **2. State Management**
+```dart
+// State Definition
+class FilterPostsState extends Equatable {
+  final FilterPostsStatus status;
+  final List<FilterPostModel> posts;
+  final List<FilterPostModel> temp_posts;
+  final String message;
+  final String search_message;
+
+  const FilterPostsState({
+    this.status = FilterPostsStatus.loading,
+    this.posts = const [],
+    this.temp_posts = const [],
+    this.message = '',
+    this.search_message = '',
+  });
+}
+```
+
+#### **3. Business Logic**
+```dart
+// BLoC Implementation
+class FilterPostsBloc extends Bloc<FilterPostsEvent, FilterPostsState> {
+  FilterPostsBloc() : super(const FilterPostsState()) {
+    on<PostsFetched>(onFetchPosts);
+    on<SearchItem>(onSearchItem);
+  }
+
+  Future<void> onFetchPosts(PostsFetched event, Emitter<FilterPostsState> emit) async {
+    // API call logic
+    await repo.onFetchPosts()
+        .then((value) => emit(state.copyWith(status: FilterPostsStatus.success, posts: value)))
+        .catchError((error) => emit(state.copyWith(status: FilterPostsStatus.failure, message: error.toString())));
+  }
+}
+```
+
+### 🎨 **UI Implementation**
+
+#### **1. BlocBuilder Pattern**
+```dart
+BlocBuilder<FilterPostsBloc, FilterPostsState>(
+  builder: (context, state) {
+    switch (state.status) {
+      case FilterPostsStatus.loading:
+        return Center(child: CircularProgressIndicator());
+      case FilterPostsStatus.success:
+        return ListView.builder(/* ... */);
+      case FilterPostsStatus.failure:
+        return Center(child: Text(state.message));
+    }
+  },
+)
+```
+
+#### **2. Event Dispatching**
+```dart
+// Triggering events from UI
+onPressed: () => context.read<FilterPostsBloc>().add(SearchItem(value))
+```
+
+---
+
+## 📊 Data Flow Diagrams
+
+### 🔄 **Complete Data Flow**
 
 ```mermaid
 sequenceDiagram
@@ -219,174 +315,44 @@ sequenceDiagram
     participant B as BLoC
     participant R as Repository
     participant A as API
-    
-    U->>UI: User Action
+
+    U->>UI: User Input
     UI->>B: Dispatch Event
-    B->>R: Fetch Data
+    B->>R: Call Repository
     R->>A: HTTP Request
-    A-->>R: JSON Response
-    R-->>B: Parsed Data
-    B->>B: Process Logic
+    A-->>R: Response
+    R-->>B: Data
+    B->>B: Process Data
     B->>UI: Emit State
-    UI->>U: Update Display
+    UI->>U: Update UI
 ```
 
-### 🎨 **UI Implementation Patterns**
-
-#### **BlocBuilder Pattern**
-```dart
-BlocBuilder<CounterBloc, CounterState>(
-  builder: (context, state) {
-    return Text("${state.counter}", style: TextStyle(fontSize: 60));
-  },
-)
-```
-
-#### **Event Dispatching**
-```dart
-ElevatedButton.icon(
-  onPressed: () => context.read<CounterBloc>().add(IncrementCounter()),
-  label: Text("Increment"),
-  icon: Icon(Icons.add_circle_rounded),
-)
-```
-
-#### **Conditional Rendering**
-```dart
-BlocBuilder<FavouriteBloc, FavouriteState>(
-  builder: (context, state) {
-    switch (state.status) {
-      case ListStatus.loading:
-        return Center(child: CircularProgressIndicator());
-      case ListStatus.success:
-        return ListView.builder(/* ... */);
-      case ListStatus.failure:
-        return Center(child: Text("Something went wrong"));
-    }
-  },
-)
-```
-
----
-
-## 📱 App Flow & User Experience
-
-### 🚀 **Application Entry Point**
-
-```dart
-// MultiBlocProvider for multiple BLoCs
-return MultiBlocProvider(
-  providers: [
-    BlocProvider<CounterBloc>(create: (context) => CounterBloc()),
-    BlocProvider<SwitchBloc>(create: (context) => SwitchBloc()),
-    BlocProvider<SliderBloc>(create: (context) => SliderBloc()),
-    BlocProvider<ImagePickerBloc>(create: (context) => ImagePickerBloc(ImagePickerUtils())),
-    BlocProvider<ToDoBloc>(create: (context) => ToDoBloc()),
-    BlocProvider<FavouriteBloc>(create: (context) => FavouriteBloc(FavouriteRepository())),
-    BlocProvider<PostsBloc>(create: (context) => PostsBloc()),
-  ],
-  child: MaterialApp(
-    debugShowCheckedModeBanner: false,
-    theme: ThemeData(useMaterial3: true, brightness: Brightness.dark),
-    home: PostsScreen(),
-  ),
-);
-```
-
-### 🎯 **User Interaction Flow**
+### 🎯 **State Management Flow**
 
 ```mermaid
-graph TD
-    A[App Launch] --> B[Posts Screen]
-    B --> C[API Data Loading]
-    C --> D[Display Posts List]
+graph LR
+    A[User Action] --> B[Event]
+    B --> C[BLoC Processing]
+    C --> D[State Update]
+    D --> E[UI Rebuild]
+    E --> F[User Feedback]
     
-    D --> E[Counter Demo]
-    D --> F[Favourite Demo]
-    D --> G[Image Picker Demo]
-    D --> H[Slider/Switch Demo]
-    D --> I[Todo Demo]
-    
-    E --> E1[Increment/Decrement]
-    F --> F1[Select Items]
-    F1 --> F2[Toggle Favourites]
-    F2 --> F3[Bulk Delete]
-    G --> G1[Camera Capture]
-    G --> G2[Gallery Selection]
-    H --> H1[Opacity Control]
-    H --> H2[Notification Toggle]
-    I --> I1[Add Task]
-    I --> I2[Delete Task]
+    style A fill:#ffeb3b
+    style B fill:#4caf50
+    style C fill:#2196f3
+    style D fill:#9c27b0
+    style E fill:#ff9800
+    style F fill:#f44336
 ```
 
-### 🎨 **Visual Design System**
-
-- **Theme**: Material Design 3 with Dark Mode
-- **Colors**: Dynamic color scheme with opacity controls
-- **Typography**: Consistent text styling across modules
-- **Icons**: Material Design icons for intuitive navigation
-- **Layout**: Responsive design with proper spacing
-
 ---
 
-## 🛠️ Dependencies & Technologies
+## 💻 Code Examples
 
-### 📦 **Core Dependencies**
-
-| Package | Version | Purpose |
-|---------|---------|---------|
-| `flutter_bloc` | ^9.1.1 | BLoC state management |
-| `bloc` | ^9.0.1 | Core BLoC functionality |
-| `equatable` | ^2.0.7 | Object equality comparison |
-| `http` | ^1.5.0 | API communication |
-| `image_picker` | ^1.2.0 | Camera and gallery access |
-
-### 🔧 **Development Dependencies**
-
-| Package | Version | Purpose |
-|---------|---------|---------|
-| `flutter_lints` | ^5.0.0 | Code quality and linting |
-| `flutter_test` | SDK | Unit and widget testing |
-
-### 🏗️ **Architecture Benefits**
-
-- ✅ **Separation of Concerns**: Clear separation between UI, business logic, and data
-- ✅ **Testability**: Easy unit testing of business logic
-- ✅ **Maintainability**: Modular code structure
-- ✅ **Scalability**: Easy to add new features
-- ✅ **Reusability**: BLoC components can be reused across screens
-
----
-
-## 📊 Code Examples
-
-### 🔄 **Complete BLoC Implementation**
+### 🎯 **1. Counter BLoC Implementation**
 
 ```dart
-// Event Definition
-abstract class CounterEvent extends Equatable {
-  const CounterEvent();
-  @override
-  List<Object?> get props => [];
-}
-
-class IncrementCounter extends CounterEvent {}
-class DecrementCounter extends CounterEvent {}
-
-// State Definition
-class CounterState extends Equatable {
-  final int counter;
-  const CounterState({this.counter = 0});
-  
-  CounterState copyWith({int? counter}) {
-    return CounterState(counter: counter ?? this.counter);
-  }
-  
-  @override
-  List<Object?> get props => [counter];
-}
-
-// BLoC Implementation
+// Counter BLoC
 class CounterBloc extends Bloc<CounterEvent, CounterState> {
   CounterBloc() : super(const CounterState()) {
     on<IncrementCounter>(_onIncrement);
@@ -403,66 +369,124 @@ class CounterBloc extends Bloc<CounterEvent, CounterState> {
 }
 ```
 
-### 🎨 **UI Integration**
+### 🔍 **2. Search Implementation**
 
 ```dart
-class CounterScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text("Counter App Demo")),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            BlocBuilder<CounterBloc, CounterState>(
-              builder: (context, state) {
-                return Text("${state.counter}", style: TextStyle(fontSize: 60));
-              },
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton.icon(
-                  onPressed: () => context.read<CounterBloc>().add(IncrementCounter()),
-                  label: Text("Increment"),
-                  icon: Icon(Icons.add_circle_rounded),
-                ),
-                SizedBox(width: 20),
-                ElevatedButton.icon(
-                  onPressed: () => context.read<CounterBloc>().add(DecrementCounter()),
-                  label: Text("Decrement"),
-                  icon: Icon(Icons.remove_circle_rounded),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
+// Search functionality in FilterPostsBloc
+void onSearchItem(SearchItem event, Emitter<FilterPostsState> emit) {
+  if (event.item.isEmpty) {
+    emit(state.copyWith(temp_posts: [], search_message: ''));
+  } else {
+    temp_posts = state.posts.where((e) => 
+      e.email.toString().toLowerCase().contains(event.item.toLowerCase())
+    ).toList();
+    
+    if (temp_posts.isEmpty) {
+      emit(state.copyWith(temp_posts: temp_posts, search_message: "No data found"));
+    } else {
+      emit(state.copyWith(temp_posts: temp_posts, search_message: ''));
+    }
   }
 }
 ```
 
+### ❤️ **3. Favorites Management**
+
+```dart
+// Favorites BLoC with complex state management
+void _onAddFavouriteItem(AddFavouriteItem event, Emitter<FavouriteState> emit) {
+  final index = items.indexWhere((e) => e.id == event.item.id);
+  items[index] = event.item;
+
+  if (temp_items.isNotEmpty) {
+    final temp_index = temp_items.indexWhere((e) => e.id == event.item.id);
+    if (temp_index != -1) temp_items[temp_index] = event.item;
+  }
+  
+  emit(state.copyWith(items: List.from(items), temp_items: List.from(temp_items)));
+}
+```
+
+### 🎚️ **4. UI Controls with State**
+
+```dart
+// Slider with opacity control
+BlocBuilder<SliderBloc, SliderState>(
+  buildWhen: (previous, current) => previous.opacity != current.opacity,
+  builder: (context, state) => Container(
+    height: 200, 
+    color: Colors.green.withValues(alpha: state.opacity)
+  ),
+)
+```
+
 ---
 
-## 🎯 **Learning Outcomes**
+## 🛠️ Dependencies
 
-This project demonstrates mastery of:
+### 📦 **Core Dependencies**
 
-- ✅ **BLoC Pattern**: Complete understanding of event-driven state management
-- ✅ **Flutter Architecture**: Clean separation of concerns
-- ✅ **State Management**: Complex state handling scenarios
-- ✅ **API Integration**: Real-world data fetching and error handling
-- ✅ **UI/UX Design**: Material Design 3 implementation
-- ✅ **Code Organization**: Modular and maintainable code structure
+| Package | Version | Purpose |
+|---------|---------|---------|
+| `flutter_bloc` | ^9.1.1 | BLoC pattern implementation |
+| `bloc` | ^9.0.1 | Core BLoC functionality |
+| `equatable` | ^2.0.7 | Object equality comparison |
+| `http` | ^1.5.0 | HTTP requests for API calls |
+| `image_picker` | ^1.2.0 | Camera and gallery integration |
+
+### 🎨 **UI Dependencies**
+
+| Package | Purpose |
+|---------|---------|
+| `cupertino_icons` | iOS-style icons |
+| `material_design` | Material Design components |
+
+### 🧪 **Development Dependencies**
+
+| Package | Purpose |
+|---------|---------|
+| `flutter_test` | Unit and widget testing |
+| `flutter_lints` | Code quality and linting |
+
+---
+
+## 🎯 **Key Learning Outcomes**
+
+### ✅ **BLoC Pattern Mastery**
+- **Event-Driven Architecture**: Understanding how events trigger state changes
+- **State Management**: Proper state handling with immutable states
+- **Separation of Concerns**: Clear separation between UI and business logic
+
+### 🔧 **Advanced Flutter Concepts**
+- **Repository Pattern**: Data layer abstraction
+- **API Integration**: HTTP requests and JSON parsing
+- **Error Handling**: Comprehensive error management
+- **Performance Optimization**: `buildWhen` for selective rebuilds
+
+### 🎨 **UI/UX Implementation**
+- **Material Design 3**: Modern UI components
+- **Dark Theme**: Consistent theming
+- **Loading States**: User feedback during async operations
+- **Error States**: Graceful error handling
+
+### 📱 **Real-World Applications**
+- **Search Functionality**: Real-time filtering
+- **Image Handling**: Device integration
+- **CRUD Operations**: Complete data management
+- **State Persistence**: Maintaining app state
 
 ---
 
 <div align="center">
 
-**🚀 Ready to explore the world of Flutter BLoC pattern!**
+### 🚀 **Ready to Explore BLoC Pattern?**
 
-*This project serves as a comprehensive learning resource for Flutter developers looking to master the BLoC pattern and state management.*
+**This project demonstrates the power and flexibility of the BLoC pattern in Flutter development. Each demo showcases different aspects of state management, from simple counters to complex API integrations.**
+
+**Start with the Counter App and work your way through to the advanced Filter API List Demo!**
+
+---
+
+*Built with ❤️ using Flutter & BLoC Pattern*
 
 </div>
