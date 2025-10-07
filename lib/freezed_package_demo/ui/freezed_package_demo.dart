@@ -1,10 +1,6 @@
 import 'dart:developer';
 
 import 'package:bloclabs/freezed_package_demo/model/animal/animal_model.dart';
-import 'package:bloclabs/freezed_package_demo/model/animal/animal_model.dart';
-import 'package:bloclabs/freezed_package_demo/model/animal/animal_model.dart';
-import 'package:bloclabs/freezed_package_demo/model/animal/animal_model.dart';
-import 'package:bloclabs/freezed_package_demo/model/animal/animal_model.dart';
 import 'package:bloclabs/freezed_package_demo/model/person_model.dart';
 import 'package:flutter/material.dart';
 

@@ -1,25 +1,15 @@
-import 'package:bloclabs/authentication_app/ui/login_screen.dart';
-import 'package:bloclabs/counter_app/ui/counter_screen.dart';
-import 'package:bloclabs/equatable_demo/equatable_demo.dart';
 import 'package:bloclabs/favourite_app/bloc/favourite_bloc.dart';
 import 'package:bloclabs/favourite_app/repository/favourite_repository.dart';
-import 'package:bloclabs/favourite_app/ui/favourite_app_screen.dart';
 import 'package:bloclabs/filter_api_list_demo/bloc/filter_posts_bloc.dart';
-import 'package:bloclabs/filter_api_list_demo/ui/filter_posts_screen.dart';
 import 'package:bloclabs/freezed_package_demo/ui/freezed_package_demo.dart';
 import 'package:bloclabs/get_api_demo/bloc/posts_bloc.dart';
-import 'package:bloclabs/get_api_demo/ui/posts_screen.dart';
 import 'package:bloclabs/image_picker_demo/bloc/image_picker_bloc.dart';
-import 'package:bloclabs/image_picker_demo/ui/image_picker_screen.dart';
 import 'package:bloclabs/image_picker_demo/utils/image_picker_utils.dart';
 import 'package:bloclabs/slider_and_switch_demo/bloc/slider/slider_bloc.dart';
-import 'package:bloclabs/slider_and_switch_demo/ui/slider_and_switch_screen.dart';
 import 'package:bloclabs/todo_app/bloc/todo_bloc.dart';
-import 'package:bloclabs/todo_app/ui/todo_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'counter_app/bloc/counter_bloc.dart';
 import 'slider_and_switch_demo/bloc/switch/switch_bloc.dart';
 
 void main() {
