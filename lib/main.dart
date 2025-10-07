@@ -55,7 +55,6 @@ class MyApp extends StatelessWidget {
     //MultiBlocProvider use for Multiple Blocs Classes
     return MultiBlocProvider(
       providers: [
-        BlocProvider<CounterBloc>(create: (context) => CounterBloc()),
         BlocProvider<SwitchBloc>(create: (context) => SwitchBloc()),
         BlocProvider<SliderBloc>(create: (context) => SliderBloc()),
         BlocProvider<ImagePickerBloc>(create: (context) => ImagePickerBloc(ImagePickerUtils())),
@@ -67,7 +66,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(useMaterial3: true, brightness: Brightness.dark),
-        home: FilterPostsScreen(),
+        home: CounterScreen(),
       ),
     );
   }
