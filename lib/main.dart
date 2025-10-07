@@ -1,3 +1,6 @@
+import 'package:bloclabs/bloc_pattern_architecture/config/routes/app_routes.dart';
+import 'package:bloclabs/bloc_pattern_architecture/config/routes/routes_name.dart';
+import 'package:bloclabs/bloc_pattern_architecture/views/splash/splash_screen.dart';
 import 'package:bloclabs/favourite_app/bloc/favourite_bloc.dart';
 import 'package:bloclabs/favourite_app/repository/favourite_repository.dart';
 import 'package:bloclabs/filter_api_list_demo/bloc/filter_posts_bloc.dart';
@@ -58,7 +61,9 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(useMaterial3: true, brightness: Brightness.dark),
-        home: FreezedPackageDemo(),
+        // home: SplashScreen(),
+        initialRoute: RoutesName.splash,
+        onGenerateRoute: AppRoutes.generateRoute,
       ),
     );
   }
