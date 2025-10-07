@@ -1,7 +1,7 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:bloclabs/filter_api_list_demo/model/filter_post_model.dart';
 import 'package:bloclabs/filter_api_list_demo/utils/enums.dart';
-import 'package:bloclabs/get_api_demo/model/post_model.dart';
-import 'package:bloclabs/get_api_demo/utils/enums.dart';
 import 'package:equatable/equatable.dart';
 
 class FilterPostsState extends Equatable {

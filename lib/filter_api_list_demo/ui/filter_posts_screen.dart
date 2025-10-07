@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:bloclabs/filter_api_list_demo/bloc/filter_posts_bloc.dart';
 import 'package:bloclabs/filter_api_list_demo/bloc/filter_posts_event.dart';
 import 'package:bloclabs/filter_api_list_demo/bloc/filter_posts_state.dart';

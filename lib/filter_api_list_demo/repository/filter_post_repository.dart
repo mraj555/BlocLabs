@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:bloclabs/filter_api_list_demo/model/filter_post_model.dart';
-import 'package:bloclabs/get_api_demo/model/post_model.dart';
 import 'package:http/http.dart' as http;
 
 class FilterPostRepository {
