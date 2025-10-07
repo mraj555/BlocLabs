@@ -1,3 +1,7 @@
+import 'package:bloclabs/bloc_pattern_architecture/config/components/internet_exception.dart';
+import 'package:bloclabs/bloc_pattern_architecture/config/components/loading_widget.dart';
+import 'package:bloclabs/bloc_pattern_architecture/config/components/round_button.dart';
+import 'package:bloclabs/bloc_pattern_architecture/config/routes/app_routes.dart';
 import 'package:bloclabs/bloc_pattern_architecture/config/routes/routes_name.dart';
 import 'package:bloclabs/bloc_pattern_architecture/views/home/home_screen.dart';
 import 'package:flutter/material.dart';
@@ -15,9 +19,16 @@ class _SplashScreenState extends State<SplashScreen> {
     return SafeArea(
       child: Scaffold(
         body: Center(
-          child: TextButton(
-            onPressed: () => Navigator.pushNamed(context, RoutesName.home),
-            child: Text('Home'),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              RoundButton(title: 'Login', onPressed: () => Navigator.pushNamed(context, RoutesName.login)),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: InternetException(onPressed: () {}),
+              ),
+            ],
           ),
         ),
       ),
