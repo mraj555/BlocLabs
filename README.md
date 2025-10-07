@@ -24,6 +24,7 @@ BlocLabs is a multi-feature Flutter application that showcases different aspects
 | 🎚️ **Slider & Switch** | Interactive UI controls with reactive state | Multiple BLoC providers, UI state sync | Multi-BLoC architecture |
 | ✅ **Todo Manager** | Add/remove tasks with dynamic list | List management, CRUD operations | Dynamic list handling |
 | ⚖️ **Equatable Demo** | Object comparison demonstration | Equatable package usage, Performance | `equatable`, Object equality |
+| 🧊 **Freezed Demo** | Code generation with Freezed package | Immutable classes, JSON serialization | `freezed`, Code generation |
 
 ## 🏗️ Architecture & Project Structure
 
@@ -52,6 +53,7 @@ lib/
 ├── 🎚️ slider_and_switch_demo/
 ├── ✅ todo_app/
 ├── ⚖️ equatable_demo/
+├── 🧊 freezed_package_demo/
 └── main.dart
 ```
 
@@ -298,6 +300,31 @@ class NewPerson extends Equatable {
 - ⚡ Clean object comparison
 - ⚡ HashCode generation
 
+### 9. 🧊 Freezed Package Demo
+
+**Code generation with immutable classes**
+
+```dart
+@freezed
+abstract class AnimalModel with _$AnimalModel {
+  const factory AnimalModel({
+    @Default('') String name, 
+    @Default(0) int age, 
+    @Default([]) List<String> petName
+  }) = _AnimalModel;
+
+  factory AnimalModel.fromJson(Map<String, dynamic> json) => 
+    _$AnimalModelFromJson(json);
+}
+```
+
+**Advanced Features:**
+- 🧊 Automatic code generation
+- 🧊 Immutable data classes
+- 🧊 JSON serialization/deserialization
+- 🧊 CopyWith functionality
+- 🧊 Union types support
+
 ## 🔧 Technical Implementation Details
 
 ### 📦 Dependencies Used
@@ -310,6 +337,13 @@ dependencies:
   http: ^1.5.0              # HTTP requests
   image_picker: ^1.2.0      # Native image selection
   cupertino_icons: ^1.0.8   # iOS-style icons
+  freezed_annotation: ^3.1.0 # Freezed annotations
+  json_annotation: ^4.9.0   # JSON annotations
+
+dev_dependencies:
+  build_runner: ^2.9.0      # Code generation
+  freezed: ^3.2.3           # Immutable classes
+  json_serializable: ^6.11.1 # JSON serialization
 ```
 
 ### 🎨 App Theme & UI
@@ -367,25 +401,28 @@ BlocListener<LoginBloc, LoginState>(
 
 ```mermaid
 graph TD
-    A[🚀 App Launch] --> B[🔐 Login Screen]
-    B --> C{Login Success?}
-    C -->|Yes| D[🏠 Main Navigation]
-    C -->|No| E[❌ Error Message]
-    E --> B
+    A[🚀 App Launch] --> B[🧊 Freezed Demo Screen]
+    B --> C[🔐 Login Screen]
+    C --> D{Login Success?}
+    D -->|Yes| E[🏠 Main Navigation]
+    D -->|No| F[❌ Error Message]
+    F --> C
     
-    D --> F[➕ Counter Demo]
-    D --> G[❤️ Favorites Demo]
-    D --> H[📡 API Demo]
-    D --> I[🖼️ Image Picker]
-    D --> J[🎚️ Controls Demo]
-    D --> K[✅ Todo Demo]
+    E --> G[➕ Counter Demo]
+    E --> H[❤️ Favorites Demo]
+    E --> I[📡 API Demo]
+    E --> J[🖼️ Image Picker]
+    E --> K[🎚️ Controls Demo]
+    E --> L[✅ Todo Demo]
+    E --> M[🔍 Filter Demo]
     
-    F --> L[🔄 Increment/Decrement]
-    G --> M[💖 Toggle Favorites]
-    H --> N[📊 Load Posts]
-    I --> O[📸 Camera/Gallery]
-    J --> P[🎛️ Slider/Switch]
-    K --> Q[✏️ Add/Remove Tasks]
+    G --> N[🔄 Increment/Decrement]
+    H --> O[💖 Toggle Favorites]
+    I --> P[📊 Load Posts]
+    J --> Q[📸 Camera/Gallery]
+    K --> R[🎛️ Slider/Switch]
+    L --> S[✏️ Add/Remove Tasks]
+    M --> T[🔍 Search & Filter]
 ```
 
 ## 🎯 Learning Outcomes
@@ -410,11 +447,70 @@ After exploring this project, developers will understand:
 - ✅ Form validation
 - ✅ Complex UI state management
 
+### 🎓 Code Generation & Tools
+- ✅ Freezed package for immutable classes
+- ✅ JSON serialization automation
+- ✅ Build runner integration
+- ✅ Code generation best practices
+
 ### 🎓 Best Practices
 - ✅ Code organization and structure
 - ✅ Testing strategies (widget tests included)
 - ✅ Performance considerations
 - ✅ Maintainable architecture
+
+## 📱 Key Implementation Highlights
+
+### 🔥 Multi-BLoC Provider Setup
+The app demonstrates how to manage multiple BLoCs efficiently:
+
+```dart
+MultiBlocProvider(
+  providers: [
+    BlocProvider<SwitchBloc>(create: (context) => SwitchBloc()),
+    BlocProvider<SliderBloc>(create: (context) => SliderBloc()),
+    BlocProvider<ImagePickerBloc>(create: (context) => ImagePickerBloc(ImagePickerUtils())),
+    BlocProvider<ToDoBloc>(create: (context) => ToDoBloc()),
+    BlocProvider<FavouriteBloc>(create: (context) => FavouriteBloc(FavouriteRepository())),
+    BlocProvider<PostsBloc>(create: (context) => PostsBloc()),
+    BlocProvider<FilterPostsBloc>(create: (context) => FilterPostsBloc()),
+  ],
+  child: MaterialApp(/* ... */),
+)
+```
+
+### 🔥 Repository Pattern Implementation
+Clean separation of data layer from business logic:
+
+```dart
+class FavouriteRepository {
+  Future<List<FavouriteItemModel>> onFetchItems() async {
+    await Future.delayed(const Duration(seconds: 3));
+    return List.of(_onGenerateList(12));
+  }
+
+  List<FavouriteItemModel> _onGenerateList(int length) {
+    return List.generate(length, (index) => 
+      FavouriteItemModel(id: '$index', value: 'Item $index'));
+  }
+}
+```
+
+### 🔥 Error Handling Strategy
+Comprehensive error handling across all modules:
+
+```dart
+Future<void> onFetchPosts(PostsFetched event, Emitter<PostsState> emit) async {
+  await repo
+      .onFetchPosts()
+      .then((value) {
+        emit(state.copyWith(status: PostsStatus.success, posts: value));
+      })
+      .catchError((error, stackTrace) {
+        emit(state.copyWith(status: PostsStatus.failure, message: error.toString()));
+      });
+}
+```
 
 ## 🔍 Code Quality & Standards
 
@@ -423,7 +519,42 @@ After exploring this project, developers will understand:
 - **Error Handling**: Comprehensive try-catch blocks
 - **Code Style**: Follows Dart/Flutter conventions
 - **Performance**: Optimized rebuilds with `buildWhen`
+- **Code Generation**: Freezed and JSON serialization
 - **Testing**: Widget tests included in `/test` directory
+
+## 🚀 Performance Optimizations
+
+### 1. **Selective Rebuilds**
+```dart
+BlocBuilder<CounterBloc, CounterState>(
+  buildWhen: (previous, current) => false, // Prevents unnecessary rebuilds
+  builder: (context, state) => ElevatedButton(/*...*/),
+)
+```
+
+### 2. **Equatable Integration**
+All state classes extend Equatable for efficient comparison:
+```dart
+class CounterState extends Equatable {
+  final int counter;
+  const CounterState({this.counter = 0});
+  
+  @override
+  List<Object?> get props => [counter];
+}
+```
+
+### 3. **Immutable Data Models**
+Using Freezed for automatic immutable class generation:
+```dart
+@freezed
+abstract class AnimalModel with _$AnimalModel {
+  const factory AnimalModel({
+    @Default('') String name,
+    @Default(0) int age,
+  }) = _AnimalModel;
+}
+```
 
 ---
 
