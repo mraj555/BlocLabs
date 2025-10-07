@@ -3,7 +3,6 @@
 [![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white)](https://dart.dev)
 [![Bloc](https://img.shields.io/badge/Bloc-%233A4147.svg?style=for-the-badge&logo=flutter&logoColor=white)](https://bloclibrary.dev)
-[![License](https://img.shields.io/github/license/your-username/bloclabs?style=for-the-badge)](LICENSE)
 
 A comprehensive Flutter project demonstrating various implementations of the BLoC (Business Logic Component) pattern with multiple real-world examples.
 
