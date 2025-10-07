@@ -1,3 +1,4 @@
+import 'package:bloclabs/authentication_app/ui/login_screen.dart';
 import 'package:bloclabs/counter_app/ui/counter_screen.dart';
 import 'package:bloclabs/equatable_demo/equatable_demo.dart';
 import 'package:bloclabs/favourite_app/bloc/favourite_bloc.dart';
@@ -66,7 +67,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(useMaterial3: true, brightness: Brightness.dark),
-        home: CounterScreen(),
+        home: LoginScreen(),
       ),
     );
   }
