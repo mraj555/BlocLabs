@@ -315,15 +315,15 @@ flowchart TD
 
 ```mermaid
 graph LR
-  Topics -- Equatable --> EquatableDemo
-  Topics -- Counter --> CounterScreen
-  Topics -- Slider/Switch --> SliderAndSwitchScreen
-  Topics -- Image Picker --> ImagePickerScreen
-  Topics -- ToDo --> TodoScreen
-  Topics -- GET API --> PostsScreen
-  Topics -- Filter API --> FilterPostsScreen
-  Topics -- Authentication Demo --> AuthLoginStandalone
-  Topics -- Bloc Pattern Architecture --> Splash -> Login -> Home
+  Topics --> EquatableDemo[Equatable]
+  Topics --> CounterScreen[Counter]
+  Topics --> SliderAndSwitchScreen[Slider/Switch]
+  Topics --> ImagePickerScreen[Image Picker]
+  Topics --> TodoScreen[ToDo]
+  Topics --> PostsScreen[GET API]
+  Topics --> FilterPostsScreen[Filter API]
+  Topics --> AuthLoginStandalone[Authentication Demo]
+  Splash --> Login --> Home[Bloc Pattern Architecture]
 ```
 
 ---
