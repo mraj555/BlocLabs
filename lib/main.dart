@@ -1,3 +1,10 @@
+import 'package:bloclabs/bloc_pattern_architecture/config/routes/app_routes.dart';
+import 'package:bloclabs/bloc_pattern_architecture/config/routes/routes_name.dart';
+import 'package:bloclabs/bloc_pattern_architecture/repository/auth/login_http_api_repository.dart';
+import 'package:bloclabs/bloc_pattern_architecture/repository/auth/login_repository.dart';
+import 'package:bloclabs/bloc_pattern_architecture/repository/movie/movie_http_api_repository.dart';
+import 'package:bloclabs/bloc_pattern_architecture/repository/movie/movie_repository.dart';
+import 'package:bloclabs/bloc_pattern_architecture/views/splash/splash_screen.dart';
 import 'package:bloclabs/favourite_app/bloc/favourite_bloc.dart';
 import 'package:bloclabs/favourite_app/repository/favourite_repository.dart';
 import 'package:bloclabs/filter_api_list_demo/bloc/filter_posts_bloc.dart';
@@ -9,10 +16,13 @@ import 'package:bloclabs/slider_and_switch_demo/bloc/slider/slider_bloc.dart';
 import 'package:bloclabs/todo_app/bloc/todo_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:get_it/get_it.dart';
 import 'slider_and_switch_demo/bloc/switch/switch_bloc.dart';
 
+GetIt getIt = GetIt.instance;
+
 void main() {
+  servicesLocator();
   runApp(const MyApp());
 }
 
@@ -58,8 +68,15 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(useMaterial3: true, brightness: Brightness.dark),
-        home: FreezedPackageDemo(),
+        // home: SplashScreen(),
+        initialRoute: RoutesName.splash,
+        onGenerateRoute: AppRoutes.generateRoute,
       ),
     );
   }
+}
+
+void servicesLocator() {
+  getIt.registerLazySingleton<LoginRepository>(() => LoginHttpAPIRepository());
+  getIt.registerLazySingleton<MovieRepository>(() => MovieHttpAPIRepository());
 }
