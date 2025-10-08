@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:bloclabs/bloc_pattern_architecture/repository/auth/login_repository.dart';
+import 'package:bloclabs/bloc_pattern_architecture/services/session_manager/session_controller.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../utils/enums.dart';
@@ -32,10 +33,12 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     emit(state.copyWith(status: LoginStatus.loading));
     await repo
         .onLoginAPI(credential)
-        .then((value) {
+        .then((value) async {
           if (value.error.isNotEmpty) {
             emit(state.copyWith(message: value.error, status: LoginStatus.error));
           } else {
+            await SessionController().saveUserInPreference(value);
+            await SessionController().getUserFromPreference();
             emit(state.copyWith(message: "Login Successful : ${value.token}", status: LoginStatus.success));
           }
         })

@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:bloclabs/bloc_pattern_architecture/config/routes/routes_name.dart';
 import 'package:bloclabs/bloc_pattern_architecture/utils/enums.dart';
 import 'package:bloclabs/bloc_pattern_architecture/utils/flush_bar_helper.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,7 @@ class LoginButton extends StatelessWidget {
           FlushBarHelper.flushBarErrorMessage(state.message, context);
         }
         if (state.status == LoginStatus.success) {
+          Navigator.pushNamedAndRemoveUntil(context, RoutesName.home, (route) => false);
           FlushBarHelper.flushBarSuccessMessage(state.message, context);
         }
       },
