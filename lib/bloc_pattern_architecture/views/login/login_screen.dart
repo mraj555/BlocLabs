@@ -1,3 +1,4 @@
+import 'package:bloclabs/bloc_pattern_architecture/models/user/user_model.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -8,6 +9,9 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+
+  UserModel user = UserModel();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
