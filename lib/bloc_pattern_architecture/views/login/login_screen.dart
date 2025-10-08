@@ -1,4 +1,5 @@
-import 'package:bloclabs/bloc_pattern_architecture/models/user/user_model.dart';
+import 'dart:developer';
+import 'widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -9,13 +10,34 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final FocusNode emailNode = FocusNode();
+  final FocusNode passwordNode = FocusNode();
 
-  UserModel user = UserModel();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(body: Center(child: Text('Login Screen'))),
+      child: Scaffold(
+        appBar: AppBar(title: Text('Login'), centerTitle: true),
+        body: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                EmailInputWidget(emailNode: emailNode),
+                SizedBox(height: 20),
+                PasswordInputWidget(passwordNode: passwordNode),
+                SizedBox(height: 50),
+                LoginButton(formKey: _formKey),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
