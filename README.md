@@ -1,522 +1,424 @@
-# 🧪 BlocLabs - Flutter BLoC Pattern Showcase
+## BlocLabs — Flutter BLoC Showcase 🚀
 
-![Flutter](https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white)
-![Dart](https://img.shields.io/badge/Dart-0175C2?style=for-the-badge&logo=dart&logoColor=white)
-![BLoC](https://img.shields.io/badge/BLoC-FF6B35?style=for-the-badge&logo=flutter&logoColor=white)
-![Material Design](https://img.shields.io/badge/Material%20Design-757575?style=for-the-badge&logo=material-design&logoColor=white)
-![HTTP](https://img.shields.io/badge/HTTP-009688?style=for-the-badge&logo=http&logoColor=white)
-![Freezed](https://img.shields.io/badge/Freezed-4CAF50?style=for-the-badge&logo=dart&logoColor=white)
+[![Flutter](https://img.shields.io/badge/Flutter-3.35%2B-02569B?logo=flutter&logoColor=white)](https://flutter.dev)
+[![Dart](https://img.shields.io/badge/Dart-3.9%2B-0175C2?logo=dart&logoColor=white)](https://dart.dev)
+[![BLoC](https://img.shields.io/badge/State%20Mgmt-BLoC-7E57C2?logo=flutter&logoColor=white)](https://bloclibrary.dev)
+[![GetIt](https://img.shields.io/badge/DI-GetIt-0A8F08)](https://pub.dev/packages/get_it)
+[![Freezed](https://img.shields.io/badge/Data-Freezed-1976D2)](https://pub.dev/packages/freezed)
+[![HTTP](https://img.shields.io/badge/Networking-http-455A64)](https://pub.dev/packages/http)
+[![Image Picker](https://img.shields.io/badge/Image-image_picker-FF7043)](https://pub.dev/packages/image_picker)
+[![Secure Storage](https://img.shields.io/badge/Secure%20Storage-flutter_secure_storage-00897B)](https://pub.dev/packages/flutter_secure_storage)
+[![Cached Images](https://img.shields.io/badge/Images-cached__network__image-5D4037)](https://pub.dev/packages/cached_network_image)
+[![Flushbar](https://img.shields.io/badge/UX-another__flushbar-6D4C41)](https://pub.dev/packages/another_flushbar)
 
-A comprehensive Flutter project demonstrating various **BLoC (Business Logic Component)** patterns and state management techniques. This repository serves as a complete learning resource and reference implementation for Flutter developers looking to master BLoC architecture with real-world examples.
+### ✨ Overview
+BlocLabs is a multi-demo Flutter application showcasing production-grade BLoC architecture patterns and feature modules:
+- Counter, Slider & Switch demos for state basics
+- Image picking (camera/gallery) with BLoC
+- ToDo list with list diffing patterns
+- API demos (GET and filter)
+- Authentication flows (standalone and within a layered architecture)
+- An opinionated “Bloc Pattern Architecture” module with DI, repositories, models, services, and views
 
-## 🎯 Project Overview
+---
 
-BlocLabs is a multi-feature Flutter application that showcases different aspects of BLoC pattern implementation, from basic counter functionality to complex API integrations and native device features. Each module is designed to demonstrate specific BLoC concepts and best practices with **clean architecture** principles.
+## 🗂 Architecture & Folder Map
 
-## 🚀 Features & Modules
+### High-level
+- `lib/` — application code
+  - `authentication_app/` — minimal login BLoC demo
+  - `bloc_pattern_architecture/` — layered architecture sample (DI, repos, services, models, views)
+  - Feature demos: `counter_app/`, `slider_and_switch_demo/`, `image_picker_demo/`, `todo_app/`, `get_api_demo/`, `filter_api_list_demo/`, `equatable_demo/`
+  - `main.dart` — app entry, DI via `GetIt`, multi-bloc providers
+  - `topics.dart` — launcher screen to navigate to feature demos
 
-| 🎨 Feature | 📝 Description | 🎓 Learning Focus | 🔧 Key Technologies |
-|------------|----------------|-------------------|-------------------|
-| 🔐 **Authentication** | Login form with real API integration | Form validation, HTTP requests, Error handling | `http`, `flutter_bloc`, API integration |
-| ➕ **Counter App** | Simple increment/decrement counter | Basic BLoC implementation, Event handling | Core BLoC pattern, State management |
-| ❤️ **Favorites Manager** | Interactive item selection with favorites | Complex state handling, List operations | Repository pattern, Multi-selection |
-| 📡 **API Integration** | Fetch and display posts from REST API | HTTP requests, JSON parsing, Loading states | `http`, Repository pattern, Error handling |
-| 🔍 **Filter & Search** | Real-time filtering of API data | Data manipulation, Search functionality | Stream handling, Data filtering |
-| 🖼️ **Image Picker** | Camera capture & gallery selection | Native device integration | `image_picker`, File handling |
-| 🎚️ **Slider & Switch** | Interactive UI controls with reactive state | Multiple BLoC providers, UI state sync | Multi-BLoC architecture |
-| ✅ **Todo Manager** | Add/remove tasks with dynamic list | List management, CRUD operations | Dynamic list handling |
-| ⚖️ **Equatable Demo** | Object comparison demonstration | Equatable package usage, Performance | `equatable`, Object equality |
-| 🧊 **Freezed Demo** | Code generation with Freezed package | Immutable classes, JSON serialization | `freezed`, Code generation |
-| 🏛️ **Clean Architecture** | Advanced BLoC with clean architecture | Dependency injection, Repository pattern | `get_it`, Clean architecture |
-
-## 🏗️ Architecture & Project Structure
-
-### 📁 Complete Folder Structure
-```
+### Bloc Pattern Architecture layout
+```12:23:lib/bloc_pattern_architecture/ARCHITECTURE.md
 lib/
-├── 🔐 authentication_app/
-│   ├── bloc/ (LoginBloc, Events, States)
-│   └── ui/ (LoginScreen)
-├── ➕ counter_app/
-│   ├── bloc/ (CounterBloc, Events, States)
-│   └── ui/ (CounterScreen)
-├── ❤️ favourite_app/
-│   ├── bloc/ (FavouriteBloc, Events, States)
-│   ├── model/ (FavouriteItemModel)
-│   ├── repository/ (FavouriteRepository)
-│   └── ui/ (FavouriteAppScreen)
-├── 📡 get_api_demo/
-│   ├── bloc/ (PostsBloc, Events, States)
-│   ├── model/ (PostModel)
-│   ├── repository/ (PostRepository)
-│   ├── utils/ (Enums)
-│   └── ui/ (PostsScreen)
-├── 🔍 filter_api_list_demo/
-│   ├── bloc/ (FilterPostsBloc, Events, States)
-│   ├── model/ (FilterPostModel)
-│   ├── repository/ (FilterPostRepository)
-│   ├── utils/ (Enums)
-│   └── ui/ (FilterPostsScreen)
-├── 🖼️ image_picker_demo/
-│   ├── bloc/ (ImagePickerBloc, Events, States)
-│   ├── utils/ (ImagePickerUtils)
-│   └── ui/ (ImagePickerScreen)
-├── 🎚️ slider_and_switch_demo/
-│   ├── bloc/
-│   │   ├── slider/ (SliderBloc, Events, States)
-│   │   └── switch/ (SwitchBloc, Events, States)
-│   └── ui/ (SliderAndSwitchScreen)
-├── ✅ todo_app/
-│   ├── bloc/ (TodoBloc, Events, States)
-│   └── ui/ (TodoScreen)
-├── ⚖️ equatable_demo/
-│   └── equatable_demo.dart
-├── 🧊 freezed_package_demo/
-│   ├── model/
-│   │   ├── animal/ (AnimalModel with Freezed)
-│   │   └── person_model.dart
-│   └── ui/ (FreezedPackageDemo)
-├── 🏛️ bloc_pattern_architecture/
-│   ├── bloc/
-│   │   ├── login/ (LoginBloc, Events, States)
-│   │   └── movie/ (MovieBloc, Events, States)
-│   ├── config/
-│   │   ├── color/ (AppColors)
-│   │   ├── components/ (Reusable Widgets)
-│   │   ├── data/
-│   │   │   ├── exceptions/ (AppExceptions)
-│   │   │   ├── network/ (NetworkServices)
-│   │   │   └── response/ (ApiResponse)
-│   │   └── routes/ (AppRoutes, RoutesName)
-│   ├── models/
-│   │   ├── movie/ (Movie with Freezed)
-│   │   ├── shows/ (Shows with Freezed)
-│   │   └── user/ (UserModel with Freezed)
-│   ├── repository/
-│   │   ├── auth/ (LoginRepository)
-│   │   └── movie/ (MovieRepository)
-│   ├── services/
-│   │   ├── session_manager/ (SessionController)
-│   │   ├── splash/ (SplashServices)
-│   │   └── storage/ (LocalStorage)
-│   ├── utils/ (Enums, Validations, FlushBarHelper)
-│   └── views/
-│       ├── home/ (HomeScreen)
-│       ├── login/ (LoginScreen + Widgets)
-│       └── splash/ (SplashScreen)
+├── bloc/
+├── config/
+│   ├── color/
+│   ├── components/
+│   ├── routes/
+│   └── themes/
+├── data/
+│   ├── exception/
+│   ├── network/
+│   └── response/
+├── l10n/
+├── models/
+├── repository/
+├── services/
+│   ├── session_manager/
+│   └── storage/
+├── utils/
+│   └── extensions/
+├── views/
 └── main.dart
 ```
 
-## 🔧 Core Components & Implementation
+---
 
-### 🎯 **1. Counter App - Basic BLoC Pattern**
+## 🧠 Core Composition
 
-**Event-Driven Architecture:**
-```dart
-// Events
-abstract class CounterEvent extends Equatable {}
-class IncrementCounter extends CounterEvent {}
-class DecrementCounter extends CounterEvent {}
-
-// State
-class CounterState extends Equatable {
-  final int counter;
-  const CounterState({this.counter = 0});
-  
-  CounterState copyWith({int? counter}) {
-    return CounterState(counter: counter ?? this.counter);
-  }
-}
-
-// BLoC
-class CounterBloc extends Bloc<CounterEvent, CounterState> {
-  CounterBloc() : super(const CounterState()) {
-    on<IncrementCounter>(_onIncrement);
-    on<DecrementCounter>(_onDecrement);
-  }
-
-  void _onIncrement(IncrementCounter event, Emitter<CounterState> emit) {
-    emit(state.copyWith(counter: state.counter + 1));
-  }
-}
-```
-
-**UI Integration:**
-```dart
-BlocBuilder<CounterBloc, CounterState>(
-  builder: (context, state) {
-    return Text("${state.counter}", style: TextStyle(fontSize: 60));
-  },
-)
-```
-
-### 🔐 **2. Authentication - Form Validation & API Integration**
-
-**Real-time Form Validation:**
-```dart
-class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  LoginBloc() : super(LoginState()) {
-    on<EmailChanged>(_onEmailChanged);
-    on<PasswordChanged>(_onPasswordChanged);
-    on<LoginAPI>(_onLoginAPI);
-  }
-
-  void _onLoginAPI(LoginAPI event, Emitter<LoginState> emit) async {
-    emit(state.copyWith(status: LoginStatus.loading));
-    
-    try {
-      final response = await http.post(
-        Uri.parse('https://reqres.in/api/login'),
-        body: {'email': state.email, 'password': state.password},
-      );
-      
-      if (response.statusCode == 200) {
-        final data = json.decode(response.body);
-        emit(state.copyWith(
-          message: "Login Successfully : ${data['token']}", 
-          status: LoginStatus.success
-        ));
-      }
-    } catch (e) {
-      emit(state.copyWith(message: e.toString(), status: LoginStatus.failure));
-    }
-  }
-}
-```
-
-### 📡 **3. API Integration - Repository Pattern**
-
-**Repository Implementation:**
-```dart
-class PostRepository {
-  Future<List<PostModel>> onFetchPosts() async {
-    final response = await http.get(
-      Uri.parse('https://jsonplaceholder.typicode.com/comments'),
-      headers: {'Content-Type': 'application/json'},
+### Entry point, DI, and App shell
+```58:76:lib/main.dart
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<SwitchBloc>(create: (context) => SwitchBloc()),
+        BlocProvider<SliderBloc>(create: (context) => SliderBloc()),
+        BlocProvider<ImagePickerBloc>(create: (context) => ImagePickerBloc(ImagePickerUtils())),
+        BlocProvider<ToDoBloc>(create: (context) => ToDoBloc()),
+        BlocProvider<FavouriteBloc>(create: (context) => FavouriteBloc(FavouriteRepository())),
+        BlocProvider<PostsBloc>(create: (context) => PostsBloc()),
+        BlocProvider<FilterPostsBloc>(create: (context) => FilterPostsBloc()),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(useMaterial3: true, brightness: Brightness.dark),
+        home: Topics(),
+        onGenerateRoute: AppRoutes.generateRoute,
+      ),
     );
+```
 
-    if (response.statusCode == 200) {
-      final posts = json.decode(response.body) as List;
-      return posts.map((e) => PostModel.fromJson(e)).toList();
+### App routing (Bloc Pattern Architecture module)
+```6:21:lib/bloc_pattern_architecture/config/routes/app_routes.dart
+class AppRoutes {
+  static Route<dynamic> generateRoute(RouteSettings settings) {
+    switch (settings.name) {
+      case RoutesName.splash:
+        return MaterialPageRoute(builder: (context) => SplashScreen());
+      case RoutesName.login:
+        return MaterialPageRoute(builder: (context) => LoginScreen());
+      case RoutesName.home:
+        return MaterialPageRoute(builder: (context) => HomeScreen());
+      default:
+        return MaterialPageRoute(
+          builder: (context) => Scaffold(body: Center(child: Text("No Route found."))),
+        );
     }
-    throw Exception("Error on fetching posts");
   }
 }
 ```
 
-**BLoC with Repository:**
-```dart
-class PostsBloc extends Bloc<PostsEvent, PostsState> {
-  PostRepository repo = PostRepository();
+---
 
-  PostsBloc() : super(const PostsState()) {
-    on<PostsFetched>(onFetchPosts);
-    add(PostsFetched()); // Auto-fetch on initialization
-  }
+## 🧩 Features, BLoCs, and Data Flow
 
-  Future<void> onFetchPosts(PostsFetched event, Emitter<PostsState> emit) async {
-    await repo.onFetchPosts()
-        .then((value) => emit(state.copyWith(
-            status: PostsStatus.success, 
-            posts: value
-        )))
-        .catchError((error) => emit(state.copyWith(
-            status: PostsStatus.failure, 
-            message: error.toString()
-        )));
+### Feature Matrix
+- **Counter App**: Increment/decrement via `CounterBloc`
+- **Slider & Switch**: UI controls with `SliderBloc` and `SwitchBloc`
+- **Image Picker**: Camera/Gallery with `ImagePickerBloc` + `image_picker`
+- **ToDo App**: Add/remove tasks via `ToDoBloc`
+- **GET API Demo**: Fetch and render list via `PostsBloc` + `http`
+- **Filter API Demo**: Fetch, search client-side via `FilterPostsBloc`
+- **Authentication Demo**: Minimal login flow using `LoginBloc` (standalone)
+- **Bloc Pattern Architecture**:
+  - Login through repository (reqres.in)
+  - Persist session to secure storage
+  - Movie list via repository and `cached_network_image`
+  - Reusable components for loading/errors
+
+### Key BLoC handlers (selected)
+- Movie fetching
+```18:26:lib/bloc_pattern_architecture/bloc/movie/movie_bloc.dart
+  void _onMovieFetched(MovieFetched event, Emitter<MovieState> emit) async {
+    await repo
+        .fetchMovies()
+        .then((value) {
+          emit(state.copyWith(movies: APIResponse.completed(value)));
+        })
+        .onError((error, stackTrace) {
+          emit(state.copyWith(movies: APIResponse.error(error.toString())));
+        });
   }
-}
 ```
 
-### 🖼️ **4. Image Picker - Native Device Integration**
-
-**Utility Class:**
-```dart
-class ImagePickerUtils {
-  final ImagePicker _picker = ImagePicker();
-
-  Future<XFile?> onCameraCapture() async {
-    return await _picker.pickImage(source: ImageSource.camera);
+- Layered login (repo + session)
+```31:43:lib/bloc_pattern_architecture/bloc/login/login_bloc.dart
+  void _onLoginAPICalled(LoginAPICalled event, Emitter<LoginState> emit) async {
+    Map<String, dynamic> credential = {'email': state.email.trim(), 'password': state.password.trim()};
+    emit(state.copyWith(status: LoginStatus.loading));
+    await repo
+        .onLoginAPI(credential)
+        .then((value) async {
+          if (value.error.isNotEmpty) {
+            emit(state.copyWith(message: value.error, status: LoginStatus.error));
+          } else {
+            await SessionController().saveUserInPreference(value);
+            await SessionController().getUserFromPreference();
+            emit(state.copyWith(message: "Login Successful : ${value.token}", status: LoginStatus.success));
+          }
+        })
+        .onError((error, stackTrace) {
+          emit(state.copyWith(message: error.toString(), status: LoginStatus.error));
+        });
   }
-
-  Future<XFile?> onPickFromGallery() async {
-    return await _picker.pickImage(source: ImageSource.gallery);
-  }
-}
 ```
 
-**BLoC Implementation:**
-```dart
-class ImagePickerBloc extends Bloc<ImagePickerEvent, ImagePickerState> {
-  final ImagePickerUtils utils;
+- Networking service wrapper (timeouts, mapping)
+```40:54:lib/bloc_pattern_architecture/config/data/network/network_services_api.dart
+  Future<dynamic> onPostAPI(String url, data) async {
+    dynamic json_response;
+    try {
+      final response = await http
+          .post(Uri.parse(url), body: data, headers: {'x-api-key': 'reqres-free-v1'})
+          .timeout(const Duration(seconds: 60));
+      json_response = onReturnResponse(response);
+    } on SocketException {
+      throw NoInternetException('');
+    } on TimeoutException {
+      throw RequestTimeoutException('');
+    }
+    log("${json_response}", name: "Response");
+    return json_response;
+  }
+```
 
-  ImagePickerBloc(this.utils) : super(ImagePickerState()) {
-    on<CameraCapture>(_onCameraCapture);
-    on<GalleryImagePicker>(_onGalleryImagePicker);
+- Home list rendering with logout (clears secure storage)
+```56:73:lib/bloc_pattern_architecture/views/home/home_screen.dart
+        body: BlocProvider<MovieBloc>(
+          create: (context) => _bloc..add(MovieFetched()),
+          child: BlocBuilder<MovieBloc, MovieState>(
+            builder: (context, state) {
+              switch (state.movies.status) {
+                case Status.loading:
+                  return Center(child: CircularProgressIndicator());
+                case Status.completed:
+                  if (state.movies.data == null) {
+                    return Center(child: Text("No Data Found"));
+                  }
+                  return ListView.builder(
+                    itemCount: state.movies.data!.tv_shows.length,
+                    itemBuilder: (context, index) {
+                      final Shows movie = state.movies.data!.tv_shows[index];
+                      return Card(
+                        child: ListTile(
+                          leading: CachedNetworkImage(
+```
+
+- Session persistence
+```20:37:lib/bloc_pattern_architecture/services/session_manager/session_controller.dart
+  Future<void> saveUserInPreference(dynamic user) async {
+    storage.setValue('token', jsonEncode(user));
+    storage.setValue('isLogin', 'true');
   }
 
+  Future<void> getUserFromPreference() async {
+    try {
+      var user_data = await storage.getValue('token');
+      var isLoggedIn = await storage.getValue('isLogin');
+
+      if (user_data!.isNotEmpty) {
+        SessionController().user = UserModel.fromJson(jsonDecode(user_data));
+      }
+      SessionController().isLoggedIn = isLoggedIn == 'true' ? true : false;
+    } catch (e) {
+      log("$e", name: "Storage Read Error");
+    }
+  }
+```
+
+---
+
+## 🔗 Data & Control Flow
+
+### App shell & navigation (Topics → Feature screens)
+- `Topics` screen offers quick navigation to each demo.
+- `onGenerateRoute` handles routes for the architecture module.
+
+### Authentication (Bloc Pattern Architecture)
+- UI widgets (`EmailInputWidget`, `PasswordInputWidget`, `LoginButton`) dispatch events.
+- `LoginBloc` uses `LoginRepository` to call `NetworkServicesAPI` → `AppURLs.login`.
+- On success, `SessionController` persists to `flutter_secure_storage`, then navigates to `home`.
+
+Mermaid flow (app-level login)
+```mermaid
+flowchart TD
+  A[Login Screen] -- onChanged --> B[LoginBloc: LoginEmailChanged/LoginPasswordChanged]
+  A -- onPressed --> C[LoginBloc: LoginAPICalled]
+  C --> D[LoginRepository.onLoginAPI]
+  D --> E[NetworkServicesAPI.onPostAPI]
+  E -->|200 OK| F[SessionController.saveUser]
+  F --> G[SessionController.getUser]
+  G --> H{Status}
+  H -- success --> I[Emit success + Navigate Home]
+  H -- error --> J[Emit error + Show Flushbar]
+```
+
+### Movies list (Bloc Pattern Architecture)
+- `HomeScreen` creates `MovieBloc(repo: getIt())` and fires `MovieFetched`.
+- Repository hits `AppURLs.popular_movies` via `GET`, transforms to `Movie` model, page renders with `CachedNetworkImage`.
+
+### GET API Demo
+- `PostsBloc` fetches comments from JSONPlaceholder and renders simple list.
+
+### Filter API Demo
+- Fetch once, filter in-memory on input:
+```29:38:lib/filter_api_list_demo/bloc/filter_posts_bloc.dart
+  void onSearchItem(SearchItem event, Emitter<FilterPostsState> emit) {
+    if (event.item.isEmpty) {
+      emit(state.copyWith(temp_posts: [], search_message: ''));
+    } else {
+      temp_posts = state.posts.where((e) => e.email.toString().toLowerCase().contains(event.item.toLowerCase())).toList();
+      if (temp_posts.isEmpty) {
+        emit(state.copyWith(temp_posts: temp_posts, search_message: "No data found"));
+      } else {
+        emit(state.copyWith(temp_posts: temp_posts, search_message: ''));
+      }
+    }
+  }
+```
+
+### Image Picker Demo
+- Camera/Gallery dispatches events to `ImagePickerBloc`, UI rebuilds with selected image preview.
+```15:23:lib/image_picker_demo/bloc/image_picker_bloc.dart
   Future<void> _onCameraCapture(CameraCapture event, Emitter<ImagePickerState> emit) async {
     XFile? file = await utils.onCameraCapture();
     emit(state.copyWith(image: file));
   }
-}
-```
 
-### 🧊 **5. Freezed Package - Code Generation**
-
-**Immutable Model with Freezed:**
-```dart
-@freezed
-abstract class AnimalModel with _$AnimalModel {
-  const factory AnimalModel({
-    @Default('') String name, 
-    @Default(0) int age, 
-    @Default([]) List<String> petName
-  }) = _AnimalModel;
-
-  factory AnimalModel.fromJson(Map<String, dynamic> json) => 
-      _$AnimalModelFromJson(json);
-}
-```
-
-**Benefits:**
-- ✅ **Immutability** by default
-- ✅ **copyWith()** method generation
-- ✅ **JSON serialization** support
-- ✅ **Equality comparison** built-in
-- ✅ **toString()** implementation
-
-### 🏛️ **6. Clean Architecture Implementation**
-
-**Dependency Injection with GetIt:**
-```dart
-GetIt getIt = GetIt.instance;
-
-void servicesLocator() {
-  getIt.registerLazySingleton<LoginRepository>(() => LoginHttpAPIRepository());
-  getIt.registerLazySingleton<MovieRepository>(() => MovieHttpAPIRepository());
-}
-```
-
-**Repository Abstraction:**
-```dart
-abstract class LoginRepository {
-  Future<UserModel> onLoginAPI(dynamic credential);
-}
-
-class LoginHttpAPIRepository implements LoginRepository {
-  @override
-  Future<UserModel> onLoginAPI(credential) async {
-    // HTTP implementation
+  Future<void> _onGalleryImagePicker(GalleryImagePicker event, Emitter<ImagePickerState> emit) async {
+    XFile? file = await utils.onPickFromGallery();
+    emit(state.copyWith(image: file));
   }
-}
+```
 
-class LoginMockAPIRepository implements LoginRepository {
-  @override
-  Future<UserModel> onLoginAPI(credential) async {
-    // Mock implementation for testing
+### ToDo App
+```13:21:lib/todo_app/bloc/todo_bloc.dart
+  void _onAddToDoEvent(AddToDoEvent event, Emitter<ToDoState> emit) {
+    _todos.add(event.task);
+    emit(state.copyWith(todos: List.from(_todos)));
   }
-}
 ```
-
-## 🎨 App Flow & Visual Interactions
-
-### 📱 **Main App Navigation Flow**
-
-```
-🚀 Splash Screen
-    ↓
-🏠 Home Screen (Route-based navigation)
-    ↓
-📋 Feature Selection
-    ├── ➕ Counter App
-    ├── 🔐 Authentication
-    ├── 📡 API Demo
-    ├── 🖼️ Image Picker
-    ├── 🎚️ Slider & Switch
-    ├── ✅ Todo Manager
-    ├── ❤️ Favorites
-    ├── 🔍 Filter Demo
-    ├── ⚖️ Equatable Demo
-    └── 🧊 Freezed Demo
-```
-
-### 🔄 **State Management Patterns**
-
-#### **Single BLoC Provider:**
-```dart
-BlocProvider(
-  create: (context) => CounterBloc(),
-  child: CounterScreen(),
-)
-```
-
-#### **Multiple BLoC Providers:**
-```dart
-MultiBlocProvider(
-  providers: [
-    BlocProvider<SwitchBloc>(create: (context) => SwitchBloc()),
-    BlocProvider<SliderBloc>(create: (context) => SliderBloc()),
-    BlocProvider<ImagePickerBloc>(create: (context) => ImagePickerBloc(ImagePickerUtils())),
-    BlocProvider<ToDoBloc>(create: (context) => ToDoBloc()),
-    BlocProvider<FavouriteBloc>(create: (context) => FavouriteBloc(FavouriteRepository())),
-  ],
-  child: MaterialApp(/* ... */),
-)
-```
-
-### 🎯 **User Interaction Flows**
-
-#### **Counter App Flow:**
-```
-User taps "+" button → IncrementCounter event → BLoC processes → State updated → UI rebuilds
-User taps "-" button → DecrementCounter event → BLoC processes → State updated → UI rebuilds
-```
-
-#### **Authentication Flow:**
-```
-User types email → EmailChanged event → State updated → Real-time validation
-User types password → PasswordChanged event → State updated → Real-time validation
-User taps Login → LoginAPI event → Loading state → API call → Success/Error state → UI feedback
-```
-
-#### **Image Picker Flow:**
-```
-User taps camera icon → CameraCapture event → Native camera opens → Image selected → State updated → Image displayed
-User taps gallery icon → GalleryImagePicker event → Native gallery opens → Image selected → State updated → Image displayed
-```
-
-## 🔧 Technical Implementation Details
-
-### 📦 **Dependencies Used**
-
-```yaml
-dependencies:
-  flutter_bloc: ^9.1.1      # State management
-  bloc: ^9.0.1              # Core BLoC library
-  equatable: ^2.0.7         # Object comparison
-  http: ^1.5.0              # HTTP requests
-  image_picker: ^1.2.0      # Native image selection
-  get_it: ^8.2.0            # Dependency injection
-  freezed_annotation: ^3.1.0 # Freezed annotations
-  json_annotation: ^4.9.0   # JSON annotations
-  fluttertoast: ^9.0.0      # Toast messages
-  cached_network_image: ^3.4.1 # Image caching
-  another_flushbar: ^1.12.32 # Custom notifications
-  flutter_secure_storage: ^9.2.4 # Secure storage
-  google_fonts: ^6.3.2     # Custom fonts
-
-dev_dependencies:
-  build_runner: ^2.9.0      # Code generation
-  freezed: ^3.2.3           # Immutable classes
-  json_serializable: ^6.11.1 # JSON serialization
-```
-
-### 🎨 **App Theme & UI**
-
-```dart
-MaterialApp(
-  theme: ThemeData(
-    useMaterial3: true, 
-    brightness: Brightness.dark
-  ),
-  // Dark theme with Material 3 design
-)
-```
-
-### 📊 **State Management Patterns Comparison**
-
-| Pattern | Use Case | Complexity | Performance |
-|---------|----------|------------|-------------|
-| **Single BLoC** | Simple features (Counter) | ⭐ Low | ⚡ Fast |
-| **Multiple BLoCs** | Complex UI (Slider + Switch) | ⭐⭐ Medium | ⚡⚡ Good |
-| **Repository Pattern** | API Integration | ⭐⭐⭐ High | ⚡⚡⚡ Excellent |
-| **Clean Architecture** | Enterprise Apps | ⭐⭐⭐⭐ Very High | ⚡⚡⚡⚡ Outstanding |
-
-### 🔄 **BLoC Event Handling Patterns**
-
-#### **Immediate Response:**
-```dart
-on<IncrementCounter>((event, emit) {
-  emit(state.copyWith(counter: state.counter + 1));
-});
-```
-
-#### **Async Operations:**
-```dart
-on<LoginAPI>((event, emit) async {
-  emit(state.copyWith(status: LoginStatus.loading));
-  try {
-    final result = await repository.login(credentials);
-    emit(state.copyWith(status: LoginStatus.success, user: result));
-  } catch (e) {
-    emit(state.copyWith(status: LoginStatus.error, message: e.toString()));
+```23:26:lib/todo_app/bloc/todo_bloc.dart
+  void _onRemoveToDoEvent(RemoveToDoEvent event, Emitter<ToDoState> emit) {
+    _todos.remove(event.task);
+    emit(state.copyWith(todos: List.from(_todos)));
   }
-});
 ```
 
-#### **Conditional State Updates:**
-```dart
-on<PostsFetched>((event, emit) async {
-  if (state.status == PostsStatus.loading) return;
-  
-  emit(state.copyWith(status: PostsStatus.loading));
-  // ... fetch logic
-});
+### Favourite App
+- Select/unselect, delete in bulk, and toggle “favourite” icon.
+```47:51:lib/favourite_app/bloc/favourite_bloc.dart
+  void _onDeleteItems(DeleteItem event, Emitter<FavouriteState> emit) {
+    items.removeWhere((e) => temp_items.contains(e));
+    temp_items.clear();
+    emit(state.copyWith(items: List.from(items), temp_items: List.from(temp_items)));
+  }
 ```
 
-## 🎓 **Learning Outcomes**
+---
 
-By exploring this project, developers will master:
+## 🧭 Visual App Flow (Top-level)
 
-- ✅ **Core BLoC Concepts**: Events, States, and BLoC classes
-- ✅ **State Management**: Single and multiple BLoC providers
-- ✅ **API Integration**: HTTP requests with proper error handling
-- ✅ **Form Validation**: Real-time validation with BLoC
-- ✅ **Native Features**: Camera and gallery integration
-- ✅ **Code Generation**: Freezed and JSON serialization
-- ✅ **Clean Architecture**: Repository pattern and dependency injection
-- ✅ **Performance Optimization**: Equatable and efficient rebuilds
-- ✅ **Error Handling**: Comprehensive error management
-- ✅ **Testing Patterns**: Mock repositories and testable architecture
+```mermaid
+graph LR
+  Topics -- Equatable --> EquatableDemo
+  Topics -- Counter --> CounterScreen
+  Topics -- Slider/Switch --> SliderAndSwitchScreen
+  Topics -- Image Picker --> ImagePickerScreen
+  Topics -- ToDo --> TodoScreen
+  Topics -- GET API --> PostsScreen
+  Topics -- Filter API --> FilterPostsScreen
+  Topics -- Authentication Demo --> AuthLoginStandalone
+  Topics -- Bloc Pattern Architecture --> Splash -> Login -> Home
+```
 
-## 🚀 **Advanced Features**
+---
 
-### 🔒 **Session Management**
-```dart
-class SessionController {
-  static final SessionController _instance = SessionController._internal();
-  factory SessionController() => _instance;
-  
-  Future<void> saveUserInPreference(UserModel user) async {
-    // Secure storage implementation
-  }
-  
-  Future<UserModel?> getUserFromPreference() async {
-    // Retrieve user data
-  }
+## 🏗️ Important Types & Utilities
+
+- `APIResponse<T>`: Loading/Completed/Error wrapper for async UI states.
+```3:15:lib/bloc_pattern_architecture/config/data/response/api_response.dart
+class APIResponse<T> {
+  Status? status;
+  T? data;
+  String? message;
+
+  APIResponse(this.status, this.data, this.message);
+  APIResponse.loading() : status = Status.loading;
+  APIResponse.completed(this.data) : status = Status.completed;
+  APIResponse.error(this.message) : status = Status.error;
+```
+
+- `Validations.emailValidator` used in login inputs.
+- `FlushBarHelper` to show success/error floating bars.
+- `LocalStorage` wraps `flutter_secure_storage` read/write/clear.
+
+---
+
+## 📦 Dependencies in Use
+
+| Area | Package | Purpose |
+|---|---|---|
+| State Mgmt | `bloc`, `flutter_bloc` | BLoC pattern and bindings |
+| DI | `get_it` | Repository and service resolution |
+| Networking | `http` | REST calls |
+| Models | `freezed`, `json_annotation` | Data classes + JSON |
+| Storage | `flutter_secure_storage` | Encrypted key/value |
+| UI | `cached_network_image`, `another_flushbar`, `google_fonts` | Imagery, feedback, typography |
+| Media | `image_picker` | Camera/Gallery selection |
+
+---
+
+## 🔍 Notable Modules
+
+- `authentication_app/`: Minimal login with direct `http` call and `SnackBar` feedback.
+- `bloc_pattern_architecture/`: Full stack (routes, repos, services, models) with session and movie list.
+- `get_api_demo/`, `filter_api_list_demo/`: API + search demos against JSONPlaceholder.
+- `image_picker_demo/`: Platform media capture/pick.
+- `slider_and_switch_demo/`, `counter_app/`, `todo_app/`: Clean examples for BLoC patterns and UI updates.
+
+---
+
+## 🧪 Selected Code References
+
+- Route names constants
+```1:5:lib/bloc_pattern_architecture/config/routes/routes_name.dart
+class RoutesName {
+  static const String splash = "splash";
+  static const String login = "login";
+  static const String home = "home";
 }
 ```
 
-### 🌐 **Network Layer**
-```dart
-abstract class BaseApiServices {
-  Future<dynamic> getApi(String url);
-  Future<dynamic> postApi(String url, dynamic data);
-}
-
-class NetworkServicesApi implements BaseApiServices {
-  @override
-  Future<dynamic> getApi(String url) async {
-    // HTTP GET implementation with error handling
-  }
-}
+- Rendering movie rows with cached images
+```68:90:lib/bloc_pattern_architecture/views/home/home_screen.dart
+                  return ListView.builder(
+                    itemCount: state.movies.data!.tv_shows.length,
+                    itemBuilder: (context, index) {
+                      final Shows movie = state.movies.data!.tv_shows[index];
+                      return Card(
+                        child: ListTile(
+                          leading: CachedNetworkImage(
+                            imageUrl: movie.image_thumbnail_path,
+                            useOldImageOnUrlChange: true,
+                            height: 50,
+                            width: 50,
+                            errorWidget: (context, url, error) => SizedBox(),
 ```
 
-### 🎨 **Custom Components**
-- **LoadingWidget**: Reusable loading indicators
-- **RoundButton**: Consistent button styling
-- **InternetException**: Network error handling
-- **FlushBarHelper**: Custom notification system
+---
 
-This project serves as a **complete reference** for Flutter developers looking to implement robust, scalable, and maintainable applications using the BLoC pattern with modern Flutter development practices.
+## 📱 UX Notes
+- Consistent Material 3 dark theme.
+- SnackBars for quick feedback, Flushbar for rich toasts (architecture login).
+- Error and loading components for resilient networking.
+
+---
+
+## 🧩 Extending the Project
+- Add more repositories under `repository/` and wire them through `getIt` in `servicesLocator()`.
+- Model new screens under `views/` and add typed routes in `config/routes/`.
+- Reuse `APIResponse<T>` with your own BLoCs for clean async UI states.
+
+---
+
+## 🗒️ Credits
+- Public APIs: `reqres.in`, `jsonplaceholder.typicode.com`
+- TV shows endpoint: `episodate.com`
+
+Enjoy exploring and extending BlocLabs! 🎉
+

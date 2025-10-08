@@ -14,6 +14,7 @@ import 'package:bloclabs/image_picker_demo/bloc/image_picker_bloc.dart';
 import 'package:bloclabs/image_picker_demo/utils/image_picker_utils.dart';
 import 'package:bloclabs/slider_and_switch_demo/bloc/slider/slider_bloc.dart';
 import 'package:bloclabs/todo_app/bloc/todo_bloc.dart';
+import 'package:bloclabs/topics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -68,8 +69,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(useMaterial3: true, brightness: Brightness.dark),
-        // home: SplashScreen(),
-        initialRoute: RoutesName.splash,
+        home: Topics(),
         onGenerateRoute: AppRoutes.generateRoute,
       ),
     );
