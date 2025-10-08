@@ -2,6 +2,8 @@ import 'package:bloclabs/bloc_pattern_architecture/config/routes/app_routes.dart
 import 'package:bloclabs/bloc_pattern_architecture/config/routes/routes_name.dart';
 import 'package:bloclabs/bloc_pattern_architecture/repository/auth/login_http_api_repository.dart';
 import 'package:bloclabs/bloc_pattern_architecture/repository/auth/login_repository.dart';
+import 'package:bloclabs/bloc_pattern_architecture/repository/movie/movie_http_api_repository.dart';
+import 'package:bloclabs/bloc_pattern_architecture/repository/movie/movie_repository.dart';
 import 'package:bloclabs/bloc_pattern_architecture/views/splash/splash_screen.dart';
 import 'package:bloclabs/favourite_app/bloc/favourite_bloc.dart';
 import 'package:bloclabs/favourite_app/repository/favourite_repository.dart';
@@ -76,4 +78,5 @@ class MyApp extends StatelessWidget {
 
 void servicesLocator() {
   getIt.registerLazySingleton<LoginRepository>(() => LoginHttpAPIRepository());
+  getIt.registerLazySingleton<MovieRepository>(() => MovieHttpAPIRepository());
 }

@@ -27,7 +27,7 @@ class SessionController {
       var user_data = await storage.getValue('token');
       var isLoggedIn = await storage.getValue('isLogin');
 
-      if (user_data.isNotEmpty) {
+      if (user_data!.isNotEmpty) {
         SessionController().user = UserModel.fromJson(jsonDecode(user_data));
       }
       SessionController().isLoggedIn = isLoggedIn == 'true' ? true : false;

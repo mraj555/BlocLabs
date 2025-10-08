@@ -7,10 +7,14 @@ part of 'movie.dart';
 // **************************************************************************
 
 _Movie _$MovieFromJson(Map<String, dynamic> json) => _Movie(
-  total: json['total'] as String? ?? '',
+  total: (json['total'] as num?)?.toInt() ?? 0,
   page: (json['page'] as num?)?.toInt() ?? 0,
   pages: (json['pages'] as num?)?.toInt() ?? 0,
-  tv_shows: (json['tv_shows'] as List<dynamic>?)?.map((e) => Shows.fromJson(e as Map<String, dynamic>)).toList() ?? const [],
+  tv_shows:
+      (json['tv_shows'] as List<dynamic>?)
+          ?.map((e) => Shows.fromJson(e as Map<String, dynamic>))
+          .toList() ??
+      const [],
 );
 
 Map<String, dynamic> _$MovieToJson(_Movie instance) => <String, dynamic>{
