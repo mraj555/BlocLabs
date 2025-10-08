@@ -9,9 +9,9 @@ part 'login_event.dart';
 part 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  LoginRepository repo = LoginRepository();
+  LoginRepository repo;
 
-  LoginBloc() : super(LoginState()) {
+  LoginBloc({required this.repo}) : super(LoginState()) {
     on<LoginEmailChanged>(_onEmailChanged);
     // on<LoginEmailUnfocused>();
     on<LoginPasswordChanged>(_onPasswordChanged);
